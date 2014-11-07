@@ -1,0 +1,26 @@
+{% extends "layouts/base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="col-md-12">
+    <h2>Your {{{ model_name }}}</h2>
+    {% for template in templates %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ template.title }}</h3>
+        </div>
+        <div class="panel-body">
+            {{ template.date_created }}
+            {{ template.email }}
+            <div class="btn-group pull-right">
+                <a href="{% url '{{{ app_name }}}.views.{{{ model_name }}}_detail' template.pk %}" class="btn btn-xs btn-info">View {{{ model_name }}}</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <hr>
+    <p>Or, add a new {{{ model_name }}}.</p>
+    TODO:
+
+</div>
+{% endblock %}
