@@ -3,14 +3,8 @@
 
 {% block content %}
 <div class="col-md-12">
-    <div class="btn-group pull-right">
-        <a href="{% url '{{{ app_name }}}.views.{{{ model_name }}}' %}" class="btn btn-xs btn-success">
-            {% bootstrap_icon "plus" %} Add another {{{ model_name }}}
-        </a>
-    </div>
-    <form action="." method="POST" role="form" class="clearfix form" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-    </form>
+    <h1><small>{{ model_name|capfirst }}</small> #{{ model.pk }}</h1>
+
+    {% include 'partials/forms/modelform-generic.html' %}
 </div>
 {% endblock %}

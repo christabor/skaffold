@@ -7,13 +7,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">{{{ app_name }}}</a>
+      <a class="navbar-brand" href="/">{{{ app_name|capitalize }}}</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        <li>
+          <a href="{% url '{{{ project_root }}}.{{{ app_name }}}.views.render_static' page='index' %}" title="Home">Home</a>
+        </li>
         {%% for active_model in all_models %%}
-        <li><a href="{% url '{{{ app_name }}}.views.{{{ active_model|lower}}}' %}">{{{ active_model }}}</a></li>
+        <li>
+          <a href="{% url '{{{ project_root }}}.{{{ app_name }}}.views.{{{ active_model|lower}}}' %}" title="{{{ active_model }}}">{{{ active_model|capitalize }}}</a>
+        </li>
         {%% endfor %%}
+        {%% if staticpages_in_nav %%}
+        {%% for title, staticpage in staticpages.iteritems() %%}
+        <li>
+          <a href="{% url '{{{ project_root }}}.{{{ app_name }}}.views.render_static' page='{{{ staticpage|lower }}}' %}" title="{{{ title }}}">{{{ staticpage|capitalize }}}</a>
+        </li>
+        {%% endfor %%}
+        {%% endif %%}
       </ul>
     </div>
   </nav>

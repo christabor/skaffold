@@ -3,24 +3,24 @@
 
 {% block content %}
 <div class="col-md-12">
-    <h2>Your {{{ model_name }}}</h2>
-    {% for template in templates %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ template.title }}</h3>
-        </div>
-        <div class="panel-body">
-            {{ template.date_created }}
-            {{ template.email }}
-            <div class="btn-group pull-right">
-                <a href="{% url '{{{ app_name }}}.views.{{{ model_name }}}_detail' template.pk %}" class="btn btn-xs btn-info">View {{{ model_name }}}</a>
+    <h1>All {{ model_name }}</h1>
+    {% for model in collection %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">#{{ model.pk }}</h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+                {% for field, value in model.fields.items %}
+                    <li><strong>{{ field }}</strong>: {{ value }}</li>
+                {% endfor %}
+                </ul>
+                <hr>
+                <a href="{% url view_url model.pk %}" class="btn btn-xs btn-info">View #{{ model.pk }}</a>
             </div>
         </div>
-    </div>
     {% endfor %}
     <hr>
-    <p>Or, add a new {{{ model_name }}}.</p>
-    TODO:
-
+    {% include 'partials/forms/modelform-generic.html' %}
 </div>
 {% endblock %}
