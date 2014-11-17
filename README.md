@@ -36,3 +36,23 @@ Currently implemented.
 TBD
 
 ## JSON options
+
+See example.json for details.
+
+Config:
+-----------
+* project_root (str) - the name of your primary application parent project (required for Django)
+* app_name (str) - the name of your individual application
+* use_admin (bool) - whether or not to use admin (Django only)
+
+* staticpages_in_nav (bool) - whether or not to render the staticpage links in the primary navigation
+
+Staticpages:
+-----------
+* title: filename (str) - a key/value list of static pages, with k = title, v = filename
+
+* static_pages_filetype (str) - the filetype to use for static pages (e.g html, hbs, templ, etc...)
+
+Models:
+-----------
+* modelname, properties (obj) - a model name, with child key/value pairs for each model property and value.

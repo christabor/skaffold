@@ -1,0 +1,26 @@
+{
+    "config": {
+        "project_root": "my_skaffolded",
+        "app_name": "cool_app",
+        "use_admin": true
+    },
+    "staticpages_in_nav": true,
+    "staticpages_filetype": "html",
+    "staticpages": {
+        "contact": "contact",
+        "awards": "awards",
+        "about": "about"
+    },
+    "models": {
+        "person": {
+            "name": "Joe",
+            "age": 28,
+            "dob": "00/00/1900"
+        },
+        "dog": {
+            "type": "Golden Retriever",
+            "gender": "male",
+            "favorite_food": "steak"
+        }
+    }
+}
