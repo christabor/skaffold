@@ -187,7 +187,7 @@ class DjangoGenerator(Skaffolder):
         elif type(prop) == str or type(prop) == unicode:
             return 'models.CharField(max_length=50)'
 
-    def get_templates(self, filetype=''):
+    def get_templates(self, filetype='.html'):
         return [template for template
                 in self.env.list_templates() if template.endswith(filetype)]
 
@@ -245,7 +245,7 @@ class DjangoGenerator(Skaffolder):
 
     def generate_modelpages(self):
         # Get and render all html templates
-        html_templates = self.get_templates(filetype='.html')
+        html_templates = self.get_templates()
         for template in html_templates:
             # Filename relativity (/foo/bar/bim) is maintained
             # from get_templates() so that subdirectories
