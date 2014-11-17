@@ -1,22 +1,19 @@
 from jinja2 import Environment, PackageLoader
 import os
 
+
 #   TODO:
 #   css/js/images + app/vendor
 #   urls for staticpages
 #
+# Finish templates
+#      - Add css / js / static dir
 #   proper inflection methods
-
 #   model detail page content.
 #
 #   notes/readme file output for further user instructions,
 #   such as plugging into parent app config
-#
-#   forms blocks
-#   forms blocks embedded into model pages
-#
 #   docstrings and params
-#
 
 
 class Skaffolder():
@@ -94,8 +91,49 @@ class Skaffolder():
             return 'fuzzy.FuzzyText(length=10)'
         return prop
 
+    def make_app_dirs(self):
+        """Creates all necessary directories for a fairly standard
+        app structure, and injects paths into self.templates:
+
+            /appname
+            /appname/templates
+            /appname/templates/layouts
+            /appname/templates/pages
+            /appname/templates/partials
+            /appname/templates/partials/forms
+
+            @returns: None
+        """
+
+        # Root must exist first.
+        os.mkdir(self.app_root)
+        self.templates['root'] = '{}'.format(self.app_root + '/templates')
+        self.templates['layouts'] = '{}/layouts'.format(self.templates['root'])
+        self.templates['pages'] = '{}/pages'.format(self.templates['root'])
+        self.templates['partials'] = '{}/partials'.format(self.templates['root'])
+
+        # Template root must exist before subdirs.
+        os.mkdir(self.templates['root'])
+        os.mkdir(self.templates['layouts'])
+        os.mkdir(self.templates['pages'])
+        os.mkdir(self.templates['partials'])
+
+        # Make other partials folders
+        os.mkdir(self.templates['partials'] + '/forms')
+
+        # Make static asset folders.
+        os.mkdir(self.app_root + '/images')
+        os.mkdir(self.app_root + '/css')
+        os.mkdir(self.app_root + '/js')
+
+        os.mkdir(self.app_root + '/css/vendor')
+        os.mkdir(self.app_root + '/css/app')
+        os.mkdir(self.app_root + '/js/vendor')
+        os.mkdir(self.app_root + '/js/app')
+
 
 class FlaskGenerator(Skaffolder):
+    # TODO
     pass
 
 
@@ -103,16 +141,11 @@ class DjangoGenerator(Skaffolder):
 
     def __init__(self, fixtures):
 
-        # TODO - Finish templates
-        #      - Add css / js / static dir
-        #      - Integrate rest of django properly so it's a
-        #           drop-in w/ startproject
-
         self.data = []
         self.fixtures = fixtures
         self.use_admin = self.fixtures['config']['use_admin']
-        self.app_name = self.fixtures['config']['app_name']
-        self.project_root = self.fixtures['config']['project_root']
+        self.app_name = self.fixtures['config']['app_name'].lower()
+        self.project_root = self.fixtures['config']['project_root'].lower()
         self.models = self.fixtures['models']
         self.templates = {
             'root': '',
@@ -121,8 +154,11 @@ class DjangoGenerator(Skaffolder):
             'pages': '',
         }
 
-        self.app_root = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), self.app_name.lower()))
+        curr_dir = os.path.dirname(__file__)
+        proj_dir = '{}/{}/{}'.format(
+            self.project_root, self.project_root, self.app_name)
+        self.app_root = os.path.abspath(os.path.join(curr_dir, proj_dir))
+
         # Setup template structure
         self.make_app_dirs()
         # Must set custom strings, since we want to keep some of the
@@ -185,46 +221,6 @@ class DjangoGenerator(Skaffolder):
     def generate_tests(self):
         return self.generate_thing('tests.py', all_models=self.models)
 
-    def make_app_dirs(self):
-        """Creates all necessary directories for a fairly standard
-        app structure, and injects paths into self.templates:
-
-            /appname
-            /appname/templates
-            /appname/templates/layouts
-            /appname/templates/pages
-            /appname/templates/partials
-            /appname/templates/partials/forms
-
-            @returns: None
-        """
-
-        # Root must exist first.
-        os.mkdir(self.app_root)
-        self.templates['root'] = '{}'.format(self.app_root + '/templates')
-        self.templates['layouts'] = '{}/layouts'.format(self.templates['root'])
-        self.templates['pages'] = '{}/pages'.format(self.templates['root'])
-        self.templates['partials'] = '{}/partials'.format(self.templates['root'])
-
-        # Template root must exist before subdirs.
-        os.mkdir(self.templates['root'])
-        os.mkdir(self.templates['layouts'])
-        os.mkdir(self.templates['pages'])
-        os.mkdir(self.templates['partials'])
-
-        # Make other partials folders
-        os.mkdir(self.templates['partials'] + '/forms')
-
-        # Make static asset folders.
-        os.mkdir(self.app_root + '/images')
-        os.mkdir(self.app_root + '/css')
-        os.mkdir(self.app_root + '/js')
-
-        os.mkdir(self.app_root + '/css/vendor')
-        os.mkdir(self.app_root + '/css/app')
-        os.mkdir(self.app_root + '/js/vendor')
-        os.mkdir(self.app_root + '/js/app')
-
     def generate_staticpages(self):
         """Allows for static pages to be specified
         and created with the json config"""
@@ -282,15 +278,16 @@ class DjangoGenerator(Skaffolder):
     def generate_pyfiles(self):
         """Adds data with each helper method,
         then generates the files in turn."""
+        _add = self.data.append
         # Create structure for render ouput
-        self.data.append({'file': '__init__.py', 'output': ''})
-        self.data.append({'file': 'views.py', 'output': self.generate_views()})
-        self.data.append({'file': 'urls.py', 'output': self.generate_routes()})
-        self.data.append({'file': 'admin.py', 'output': self.generate_admin()})
-        self.data.append({'file': 'models.py', 'output': self.generate_models()})
-        self.data.append({'file': 'forms.py', 'output': self.generate_model_forms()})
-        self.data.append({'file': 'model_factories.py', 'output': self.generate_model_factories()})
-        self.data.append({'file': 'tests.py', 'output': self.generate_tests()})
+        _add({'file': '__init__.py', 'output': ''})
+        _add({'file': 'views.py', 'output': self.generate_views()})
+        _add({'file': 'urls.py', 'output': self.generate_routes()})
+        _add({'file': 'admin.py', 'output': self.generate_admin()})
+        _add({'file': 'models.py', 'output': self.generate_models()})
+        _add({'file': 'forms.py', 'output': self.generate_model_forms()})
+        _add({'file': 'model_factories.py', 'output': self.generate_model_factories()})
+        _add({'file': 'tests.py', 'output': self.generate_tests()})
 
         # Save all rendered output as new files for the app
         for rendered in self.data:
@@ -310,5 +307,3 @@ class DjangoGenerator(Skaffolder):
         self.generate_pyfiles()
         # Generate django-admin commands
         self.generate_commands()
-
-
