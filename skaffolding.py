@@ -142,6 +142,7 @@ class DjangoGenerator(Skaffolder):
     def __init__(self, fixtures):
 
         self.data = []
+        self.skeleton_root = 'django'
         self.fixtures = fixtures
         self.use_admin = self.fixtures['config']['use_admin']
         self.app_name = self.fixtures['config']['app_name'].lower()
@@ -164,7 +165,7 @@ class DjangoGenerator(Skaffolder):
         # Must set custom strings, since we want to keep some of the
         # jinja/django style syntax intact in some outputs (e.g. templates)
         self.env = Environment(
-            loader=PackageLoader('_skeleton', ''),
+            loader=PackageLoader(self.skeleton_root, ''),
             block_start_string='{%%',
             block_end_string='%%}',
             variable_start_string='{{{',
@@ -248,7 +249,7 @@ class DjangoGenerator(Skaffolder):
         for template in html_templates:
             # Filename relativity (/foo/bar/bim) is maintained
             # from get_templates() so that subdirectories
-            # can be mirrored from the _skeleton dir.
+            # can be mirrored from the skeleton_root dir.
             self.data.append({
                 'file': template,
                 'output': self.generate_thing(
