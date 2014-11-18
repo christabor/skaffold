@@ -12,6 +12,7 @@ By using the wonderful [Jinja2 templating engine](https://github.com/mitsuhiko/j
     * Any arbitrary static page
     * Form partials for CRUD operations
     * Model and Collection views
+* (Django) custom commands for fixture generation `python manage.py generate_fixtures`
 * Typical app structure:
     * CSS, JS and image folder, with app/vendor subfolders.
 * Bootstrap-3 styling/integration.
