@@ -57,3 +57,10 @@ Staticpages:
 Models:
 -----------
 * modelname, properties (obj) - a model name, with child key/value pairs for each model property and value.
+
+
+## TODO:
+
+Inflection is stubbed out and does not work appropriately
+More support beyond django - TBD
+
