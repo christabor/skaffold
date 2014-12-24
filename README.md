@@ -1,4 +1,4 @@
-Skaffold - auto scaffolding for your python web applications!
+Skaffold - auto scaffolding for your MVC web applications!
 ============================================================
 
 # How does it work?
