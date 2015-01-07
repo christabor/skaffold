@@ -16,7 +16,7 @@ import os
 #   docstrings and params
 
 
-class Skaffolder():
+class Skaffolder:
     """
     = route (urls)
         view model
