@@ -110,7 +110,8 @@ class Skaffolder:
         self.templates['root'] = '{}'.format(self.app_root + '/templates')
         self.templates['layouts'] = '{}/layouts'.format(self.templates['root'])
         self.templates['pages'] = '{}/pages'.format(self.templates['root'])
-        self.templates['partials'] = '{}/partials'.format(self.templates['root'])
+        self.templates['partials'] = '{}/partials'.format(
+            self.templates['root'])
 
         # Template root must exist before subdirs.
         os.mkdir(self.templates['root'])
@@ -281,14 +282,20 @@ class DjangoGenerator(Skaffolder):
         then generates the files in turn."""
         _add = self.data.append
         # Create structure for render ouput
-        _add({'file': '__init__.py', 'output': ''})
-        _add({'file': 'views.py', 'output': self.generate_views()})
-        _add({'file': 'urls.py', 'output': self.generate_routes()})
-        _add({'file': 'admin.py', 'output': self.generate_admin()})
-        _add({'file': 'models.py', 'output': self.generate_models()})
-        _add({'file': 'forms.py', 'output': self.generate_model_forms()})
-        _add({'file': 'model_factories.py', 'output': self.generate_model_factories()})
-        _add({'file': 'tests.py', 'output': self.generate_tests()})
+        to_generate = [
+            ['__init__.py', ''],
+            ['views.py', self.generate_views],
+            ['urls.py', self.generate_routes],
+            ['admin.py', self.generate_admin],
+            ['models.py', self.generate_models],
+            ['forms.py', self.generate_model_forms],
+            ['model_factories.py', self.generate_model_factories],
+            ['tests.py', self.generate_tests],
+        ]
+        for item in to_generate:
+            filename, output = item
+            output = output() if hasattr(output, '__call__') else output
+            _add({'file': filename, 'output': output})
 
         # Save all rendered output as new files for the app
         for rendered in self.data:
