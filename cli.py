@@ -1,12 +1,12 @@
 import os
 import sys
 import json
-import skaffolding
-
+from skaffolders import FlaskSkaffolder
+from skaffolders import DjangoSkaffolder
 
 generators = {
-    'django': skaffolding.DjangoGenerator,
-    'flask': skaffolding.FlaskGenerator,
+    'django': DjangoSkaffolder,
+    'flask': FlaskSkaffolder,
 }
 
 
