@@ -274,7 +274,8 @@ class DjangoGenerator(Skaffolder):
         # for generating fixture data.
         self.save(
             self.generate_thing(
-                'generate_fixtures.py', all_models=self.models),
+                'generate_fixtures.py',
+                all_models=self.models, app_name=self.app_name),
             'generate_fixtures.py', subdirectory='management/commands/')
 
     def generate_pyfiles(self):

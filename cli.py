@@ -4,7 +4,7 @@ import json
 import skaffolding
 
 
-__types__ = {
+generators = {
     'django': skaffolding.DjangoGenerator,
     'flask': skaffolding.FlaskGenerator,
 }
@@ -50,6 +50,8 @@ def from_scratch_django(fixture_data):
 
     2. Add the app to your settings.py INSTALLED_APPS
     3. Add any dependencies to your settings.py INSTALLED_APPS
+        Bootstrap3, and FactoryBoy are both currently necessary dependencies
+        That you'll need to install (e.g. `sudo pip install X`)
 
     See the README for more details.
 
@@ -61,10 +63,9 @@ def new_app_django(fixture_data):
     print('Generating... app "{}" in project "{}"'.format(
         fixture_data['config']['app_name'],
         fixture_data['config']['project_root']))
-
     # TODO: add types for classes (with --type option, or config property),
     # instead of defaulting to django
-    gen = __types__['django'](fixture_data)
+    gen = generators['django'](fixture_data)
     gen.generate_all()
 
 
