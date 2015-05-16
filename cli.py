@@ -38,7 +38,8 @@ def from_scratch_django(fixture_data):
     1. Update your main urls file to capture the app underneath it
         e.g.
         urlpatterns += patterns('',
-            (r'^', include('{}.{}.urls')),
+            url(r'^', include('{}.{}.urls')),
+            ...
         )
         - or -
         Update the `ROOT_URLCONF` option in the django settings file

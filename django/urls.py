@@ -8,8 +8,8 @@ urlpatterns = patterns('{{{ project_root }}}.{{{ app_name }}}.views',
     {%% for model_name in all_models %%}{%% set model_name = model_name|lower %%}
     url(r'^{{{ model_name }}}/$', '{{{ model_name }}}'),
     url(r'^{{{ model_name }}}/add/$', '{{{ model_name }}}_add'),
-    url(r'^{{{ model_name }}}/(?P<pk>[0-9])/$', '{{{ model_name }}}_detail'),
-    url(r'^{{{ model_name }}}/(?P<pk>[0-9])/delete/$', '{{{ model_name }}}_delete'),
+    url(r'^{{{ model_name }}}/(?P<pk>[0-9]+)/$', '{{{ model_name }}}_detail'),
+    url(r'^{{{ model_name }}}/(?P<pk>[0-9]+)/delete/$', '{{{ model_name }}}_delete'),
     {%% endfor %%}
     {%% for _, staticpage in staticpages.iteritems() %%}{%% set staticpage = staticpage|lower %%}
     url(r'^{{{ staticpage }}}/$', 'render_static', {'page': '{{{ staticpage }}}'}),
