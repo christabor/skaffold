@@ -8,5 +8,5 @@ class {{{ model_name }}}(models.Model):
 
     def __unicode__(self):
         fields = [{%% for prop, value in props.iteritems() %%}'{{{ prop }}}', {%% endfor %%}]
-        return unicode('{%% for prop, value in props.iteritems() %%}<{}>, {%% endfor %%}'.format(*fields))
+        return unicode('<{%% for prop, value in props.iteritems() %%}{}.{%% endfor %%}>'.format(*fields))
 {%% endfor %%}
