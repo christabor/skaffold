@@ -10,33 +10,26 @@ generators = {
 }
 
 
+def _clean(root_dir):
+    print('Deleting existing project (if applicable) located at {}'.format(
+        root_dir))
+    os.system('rm -r ' + root_dir)
+
+
 def from_scratch_django(fixture_data):
     """Does all work required to setup a completely new application."""
     project_name = fixture_data['config']['project_root']
     app_name = fixture_data['config']['app_name']
+    root_dir = os.getcwd() + '/' + project_name + '/'
+    settings_file = root_dir + '/' + project_name + '/settings.py'
 
-    # TODO: this is kind of weird
-
-    print('Deleting existing django project (if applicable)...')
-    os.system('rm -r ' + project_name)
+    _clean(root_dir)
 
     print('Adding new django project...')
     os.system('django-admin.py startproject ' + project_name)
 
-    print('Generating new django app...')
+    print('Skaffolding app structure...')
     new_app_django(fixture_data)
-
-    print('Generating DB tables...')
-    os.system('cd ' + project_name + ' && python manage.py syncdb --noinput')
-
-    print('Generating DB test data...')
-    os.system('python manage.py generate_fixtures')
-
-    print('Jumping back down...')
-    os.system('cd ..')
-
-    # TODO: Automatically fix the below issues for user.
-    # TODO: test with making a bunch of apps, in config
 
     print("""
     Okay! Everything is done.
@@ -47,20 +40,28 @@ def from_scratch_django(fixture_data):
         urlpatterns += patterns('',
             (r'^', include('{}.{}.urls')),
         )
+        - or -
+        Update the `ROOT_URLCONF` option in the django settings file
+        to reference your specific app.
 
     2. Add the app to your settings.py INSTALLED_APPS
     3. Add any dependencies to your settings.py INSTALLED_APPS
         Bootstrap3, and FactoryBoy are both currently necessary dependencies
         That you'll need to install (e.g. `sudo pip install X`)
+    4. Sync/migrate your models and install the fixture data!
+        This is located in {settings}.
+        The following command will get you going:
+            `python manage.py syncdb --noinput &&
+             python manage.py generate_fixtures`
 
     See the README for more details.
 
-    """.format(project_name, app_name))
+    """.format(project_name, app_name, settings=settings_file))
 
 
 def new_app_django(fixture_data):
     """A quick util to access the generator from command line"""
-    print('Generating... app "{}" in project "{}"'.format(
+    print('Generating app "{}" in project "{}"'.format(
         fixture_data['config']['app_name'],
         fixture_data['config']['project_root']))
     # TODO: add types for classes (with --type option, or config property),
