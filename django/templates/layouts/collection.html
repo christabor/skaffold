@@ -16,7 +16,9 @@
                 {% endfor %}
                 </ul>
                 <hr>
+                {% with "{{{ app_name }}}.views."|add:model_name|lower|add:"_detail" as view_url %}
                 <a href="{% url view_url model.pk %}" class="btn btn-xs btn-info">View #{{ model.pk }}</a>
+                {% endwith %}
             </div>
         </div>
     {% endfor %}

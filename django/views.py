@@ -24,7 +24,6 @@ def {{{ model_name|lower }}}(request):
         form = forms.{{{ model_name }}}Form()
     context = {
         'form_mode': 'add',
-        'view_url': '{{{ app_name }}}.views.{{{ model_name|lower }}}_detail',
         'model_name': '{{{ model_name }}}',
         'collection': serializers.serialize('python', models.{{{ model_name }}}.objects.all()),
         'form': form

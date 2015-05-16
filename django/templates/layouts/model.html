@@ -3,8 +3,18 @@
 
 {% block content %}
 <div class="col-md-12">
+    <ol class="breadcrumb">
+        <li>
+            <a href="/">home</a>
+        </li>
+        <li>
+            {% with "{{{ app_name }}}.views."|add:model_name|lower as view_url %}
+            <a href="{% url view_url %}">{{ model_name|lower }}</a>
+            {% endwith %}
+        </li>
+        <li class="active">{{ model.pk }}</li>
+    </ol>
     <h1><small>{{ model_name|capfirst }}</small> #{{ model.pk }}</h1>
-
     {% include 'partials/forms/modelform-generic.html' %}
 </div>
 {% endblock %}
