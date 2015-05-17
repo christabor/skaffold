@@ -63,18 +63,16 @@ TBD
 * data_attrs: attrs list (array) - a list of data attributes to apply to the html representation
 
 ### Static assets
-#### CSS/JSS
+**CSS/JSS**
 * active: (boolean) - if custom css should be shown in base template
 * libs: (array) - a list of names of libraries to add
 
 ### Staticpages:
------------
 * title: filename (str) - a key/value list of static pages, with k = title, v = filename
 
 * static_pages_filetype (str) - the filetype to use for static pages (e.g html, hbs, templ, etc...)
 
 ### Models:
------------
 * modelname, properties (obj) - a model name, with child key/value pairs for each model property and value.
 
 ### TODO:
