@@ -45,7 +45,7 @@ class DjangoSkaffolder(Skaffolder):
             variable_end_string='}}}',)
         # Add custom filters to Jinja's context
         self.env.filters['pluralize'] = self.get_plural_inflection
-        self.env.filters['singular'] = self.get_singular_inflection
+        self.env.filters['singularize'] = self.get_singular_inflection
         self.env.filters['model_field'] = self.get_model_field_type
         self.env.filters['factory_field'] = self.get_modelfactory_field_type
 
