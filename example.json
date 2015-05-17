@@ -42,13 +42,14 @@
         "person": {
             "display_as": "table",
             "classes": ["table", "table-striped", "table-bordered", "table-hover"],
-            "data_attrs": ["datatable"]
+            "data_attrs": ["datatable", "x-editable"]
         },
         "dog": {
             "display_as": "list"
         },
         "cat": {
-            "display_as": "panel"
+            "display_as": "panel",
+            "data_attrs": ["x-editable"]
         }
     }
 }
