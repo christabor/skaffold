@@ -37,6 +37,8 @@ class DjangoSkaffolder(Skaffolder):
         # jinja/django style syntax intact in some outputs (e.g. templates)
         self.env = Environment(
             loader=PackageLoader(self.skeleton_root, ''),
+            trim_blocks=True,
+            lstrip_blocks=True,
             block_start_string='{%%',
             block_end_string='%%}',
             variable_start_string='{{{',
@@ -73,7 +75,10 @@ class DjangoSkaffolder(Skaffolder):
 
     def generate_views(self):
         return self.generate_thing(
-            'views.py', app_name=self.app_name, all_models=self.models)
+            'views.py',
+            app_name=self.app_name,
+            all_models=self.models,
+            model_config=self.fixtures['model_config'])
 
     def generate_routes(self):
         return self.generate_thing(
@@ -114,9 +119,7 @@ class DjangoSkaffolder(Skaffolder):
                 'templates/partials/forms/modelform-generic.html'),
             'modelform-generic.html', subdirectory='templates/partials/forms/')
 
-    def generate_modelpages(self):
-        # Get and render all html templates for models:
-        # collection lists, detail pages, etc...
+    def generate_layouts(self):
         html_templates = self.get_templates()
         for template in html_templates:
             # Filename relativity (/foo/bar/bim) is maintained
@@ -128,6 +131,8 @@ class DjangoSkaffolder(Skaffolder):
                     template,
                     staticpages=self.fixtures['staticpages'],
                     staticpages_in_nav=self.fixtures['staticpages_in_nav'],
+                    css_config=self.fixtures['static_config']['css_config'],
+                    js_config=self.fixtures['static_config']['js_config'],
                     project_root=self.project_root,
                     app_name=self.app_name,
                     all_models=self.models),
@@ -178,13 +183,9 @@ class DjangoSkaffolder(Skaffolder):
         """The single source for generating all data at once."""
         # Always initialize empty list to prevent duplicate data
         self.data = []
-        # generate primary model/collection pages
-        self.generate_modelpages()
-        # Save all staticpages
+        self.generate_layouts()
         self.generate_staticpages()
-        # Save all html form blocks
         self.generate_form_partial()
-        # Generate all django python files
         self.generate_pyfiles()
         # Generate django-admin commands
         self.generate_commands()

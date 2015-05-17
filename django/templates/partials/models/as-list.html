@@ -1,0 +1,10 @@
+{% for model in collection %}
+    <ul class="{{ display_type_classes }}" {{ display_type_data_attrs }}>
+        {% for field, value in model.fields.items %}
+        <li><strong>{{ field }}</strong>: {{ value }}</li>
+        {% endfor %}
+        <li>
+            <a href="{% url view_url model.pk %}" class="btn btn-xs btn-info">View #{{ model.pk }}</a>
+        </li>
+    </ul>
+{% endfor %}

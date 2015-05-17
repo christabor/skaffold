@@ -115,6 +115,7 @@ class Skaffolder:
 
         # Make other partials folders
         os.mkdir(self.templates['partials'] + '/forms')
+        os.mkdir(self.templates['partials'] + '/models')
 
         # Make static asset folders.
         os.mkdir(self.app_root + '/images')

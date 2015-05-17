@@ -4,24 +4,22 @@
 {% block content %}
 <div class="col-md-12">
     <h1>All {{ model_name }}</h1>
-    {% for model in collection %}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">#{{ model.pk }}</h3>
-            </div>
-            <div class="panel-body">
-                <ul>
-                {% for field, value in model.fields.items %}
-                    <li><strong>{{ field }}</strong>: {{ value }}</li>
-                {% endfor %}
-                </ul>
-                <hr>
-                {% with "{{{ app_name }}}.views."|add:model_name|lower|add:"_detail" as view_url %}
-                <a href="{% url view_url model.pk %}" class="btn btn-xs btn-info">View #{{ model.pk }}</a>
-                {% endwith %}
-            </div>
-        </div>
-    {% endfor %}
+    {% with "{{{ app_name }}}.views."|add:model_name|lower|add:"_detail" as view_url %}
+
+    {% if display_type == 'table' %}
+        {% include 'partials/models/as-table.html' %}
+    {% endif %}
+
+    {% if display_type == 'list' %}
+        {% include 'partials/models/as-list.html' %}
+    {% endif %}
+
+    {% if display_type == 'panel' %}
+        {% include 'partials/models/as-panel.html' %}
+    {% endif %}
+
+    {% endwith %}
+
     <hr>
     {% include 'partials/forms/modelform-generic.html' %}
 </div>
