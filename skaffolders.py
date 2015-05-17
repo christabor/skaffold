@@ -111,7 +111,7 @@ class DjangoSkaffolder(Skaffolder):
                 output, '{}.{}'.format(html_name, filetype),
                 subdirectory='templates/pages/')
 
-    def generate_form_partial(self):
+    def generate_form_partials(self):
         """Creates all forms from model forms, as reusable blocks
         that can be embedded into any page."""
         self.save(
@@ -185,7 +185,7 @@ class DjangoSkaffolder(Skaffolder):
         self.data = []
         self.generate_layouts()
         self.generate_staticpages()
-        self.generate_form_partial()
+        self.generate_form_partials()
         self.generate_pyfiles()
         # Generate django-admin commands
         self.generate_commands()

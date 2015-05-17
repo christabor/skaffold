@@ -119,12 +119,17 @@ class Skaffolder:
         os.mkdir(self.templates['partials'] + '/models')
 
         # Make static asset folders.
-        os.mkdir(self.app_root + '/static/')
-        os.mkdir(self.app_root + '/static/images')
-        os.mkdir(self.app_root + '/static/css')
-        os.mkdir(self.app_root + '/static/js')
+        static = self.app_root + '/static/'
+        static_image = self.app_root + '/static/js/'
+        static_css = self.app_root + '/static/images/'
+        static_js = self.app_root + '/static/css/'
 
-        os.mkdir(self.app_root + '/static/css/vendor')
-        os.mkdir(self.app_root + '/static/css/app')
-        os.mkdir(self.app_root + '/static/js/vendor')
-        os.mkdir(self.app_root + '/static/js/app')
+        os.mkdir(static)
+        os.mkdir(static_image)
+        os.mkdir(static_css)
+        os.mkdir(static_js)
+
+        os.mkdir(static_css + '/vendor')
+        os.mkdir(static_css + 'app')
+        os.mkdir(static_js + 'vendor')
+        os.mkdir(static_js + 'app')

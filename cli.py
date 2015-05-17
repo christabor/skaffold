@@ -4,11 +4,6 @@ import json
 from skaffolders import FlaskSkaffolder
 from skaffolders import DjangoSkaffolder
 
-generators = {
-    'django': DjangoSkaffolder,
-    'flask': FlaskSkaffolder,
-}
-
 
 def _clean(root_dir):
     print('Deleting existing project (if applicable) located at {}'.format(
@@ -21,6 +16,7 @@ def from_scratch_django(fixture_data):
     project_name = fixture_data['config']['project_root']
     app_name = fixture_data['config']['app_name']
     root_dir = os.getcwd() + '/' + project_name + '/'
+    root_urlconf = root_dir + '/' + project_name + '/urls.py'
     settings_file = root_dir + '/' + project_name + '/settings.py'
 
     _clean(root_dir)
@@ -29,46 +25,44 @@ def from_scratch_django(fixture_data):
     os.system('django-admin.py startproject ' + project_name)
 
     print('Skaffolding app structure...')
-    new_app_django(fixture_data)
+    django_skaffold = DjangoSkaffolder(fixture_data)
+    new_app_django(django_skaffold, fixture_data)
+
+    print('Updating settings and urlconf files...')
+    with open(settings_file, 'a') as django_settings:
+        django_settings.write(
+            "\nINSTALLED_APPS += ('{project}.{app}', 'bootstrap3',)\n".format(
+                project=project_name, app=app_name))
+        django_settings.close()
+
+    with open(root_urlconf, 'a') as urlconf:
+        urlconf.write(
+            "\nfrom {app} import urls as {app}_urls\n"
+            "urlpatterns += url(r'^', include({app}_urls)),\n".format(
+                app=app_name))
+        urlconf.close()
+
+    print('Creating database tables and fixture data...')
+    os.system('cd {} && python manage.py syncdb --noinput && '
+              'python manage.py generate_fixtures'.format(project_name))
+
+    print('Running server!')
+    os.system('cd {} && python manage.py runserver'.format(project_name))
 
     print("""
     Okay! Everything is done.
-    You just need to update a few things...
+    Now, check out the REDAME and example JSON configuration for more details.
 
-    1. Update your main urls file to capture the app underneath it
-        e.g.
-        urlpatterns += patterns('',
-            url(r'^', include('{}.{}.urls')),
-            ...
-        )
-        - or -
-        Update the `ROOT_URLCONF` option in the django settings file
-        to reference your specific app.
-
-    2. Add the app to your settings.py INSTALLED_APPS
-    3. Add any dependencies to your settings.py INSTALLED_APPS
-        Bootstrap3, and FactoryBoy are both currently necessary dependencies
-        That you'll need to install (e.g. `sudo pip install X`)
-    4. Sync/migrate your models and install the fixture data!
-        This is located in {settings}.
-        The following command will get you going:
-            `python manage.py syncdb --noinput &&
-             python manage.py generate_fixtures`
-
-    See the README for more details.
-
+    Happy Skaffolding!
     """.format(project_name, app_name, settings=settings_file))
 
 
-def new_app_django(fixture_data):
+def new_app_django(skaffold, fixture_data):
     """A quick util to access the generator from command line"""
     print('Generating app "{}" in project "{}"'.format(
         fixture_data['config']['app_name'],
         fixture_data['config']['project_root']))
-    # TODO: add types for classes (with --type option, or config property),
-    # instead of defaulting to django
-    gen = generators['django'](fixture_data)
-    gen.generate_all()
+    skaffold.generate_all()
 
 
 # Run when file is run
