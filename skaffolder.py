@@ -1,4 +1,6 @@
 import os
+from inflection import pluralize
+from inflection import singularize
 
 #   TODO:
 #   css/js/images + app/vendor
@@ -58,11 +60,7 @@ class Skaffolder:
             newfile.write(rendered + '\n')
 
     def get_singular_inflection(self, word):
-        if word.endswith('s'):
-            return word[:-1]
-        else:
-            # Do other inflection stuff.
-            return word
+        return singularize(word)
 
     def get_plural_inflection(self, word):
         """Gets proper plural inflection for a word.
@@ -70,8 +68,7 @@ class Skaffolder:
                 model: cat, collection: cats
                 model: cactus, collection: cacti
         """
-        # TODO: Add the real deal: http://en.wikipedia.org/wiki/English_plurals
-        return word + 's'
+        return pluralize(word)
 
     def get_modelfactory_field_type(self, prop):
         """Given a prop, returns the closest factory boy field type."""
@@ -87,15 +84,7 @@ class Skaffolder:
 
     def make_app_dirs(self):
         """Creates all necessary directories for a fairly standard
-        app structure, and injects paths into self.templates:
-
-            /appname
-            /appname/templates
-            /appname/templates/layouts
-            /appname/templates/pages
-            /appname/templates/partials
-            /appname/templates/partials/forms
-
+        app structure, and injects the appropriate paths into self.templates
         Returns:
             None
         """
