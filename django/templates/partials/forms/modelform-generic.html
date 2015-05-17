@@ -1,7 +1,7 @@
 {% load bootstrap3 %}
 <form action="." method="POST" role="form" class="clearfix form" enctype="multipart/form-data">
     {% csrf_token %}
-    <legend>{{ form_mode|capfirst }} {{{ model_name }}}</legend>
+    <legend><strong>{{ form_mode|capfirst }}</strong> a new {{ model_name|lower }}</legend>
     {% if form.error %}
     {% for error in form.error %}
     <span class="bg-danger">
