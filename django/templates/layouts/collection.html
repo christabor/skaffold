@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="col-md-12">
-    <h1>All {{ model_name }}</h1>
+    <h1>All {{ model_name_nice }}</h1>
     {% with "{{{ app_name }}}.views."|add:model_name|lower|add:"_detail" as view_url %}
 
     {% if display_type == 'table' %}

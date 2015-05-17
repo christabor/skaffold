@@ -16,7 +16,8 @@ def render_static(request, page):
 
 {%% for model_name in all_models %%}
 {%% set model_name = model_name|capitalize %%}
-{%% set _model_config = model_config[model_name|lower] %%}
+{%% set _model_config = model_config[model_name|lower] if model_config[model_name|lower] else [] %%}
+{%% set dattrs = _model_config['data_attrs'] if _model_config['data_attrs'] else [] %%}
 def {{{ model_name|lower }}}(request):
     if request.method == 'POST':
         form = forms.{{{ model_name }}}Form(request.POST, request.FILES)
@@ -30,8 +31,9 @@ def {{{ model_name|lower }}}(request):
         'form_mode': 'add',
         'display_type': '{{{ _model_config['display_as'] }}}',
         'display_type_classes': '{{{ _model_config['classes']|join(' ') }}}',
-        'display_type_data_attrs': ' '.join(map(lambda attr: 'data-{}'.format(attr), {{{ _model_config['data_attrs'] }}})),
+        'display_type_data_attrs': ' '.join(map(lambda attr: 'data-{}'.format(attr), {{{ dattrs }}})),
         'model_name': '{{{ model_name }}}',
+        'model_name_nice': '{{{ model_name|pluralize }}}',
         'collection': serializers.serialize(
             'python', models.{{{ model_name }}}.objects.all()),
         'form': form
@@ -54,7 +56,7 @@ def {{{ model_name|lower }}}_detail(request, pk):
     context = {
         'form_mode': 'edit',
         'model': {{{ model_name|lower }}}_instance,
-        'model_name': '{{{ model_name }}}',
+        'model_name': '{{{ model_name|singularize }}}',
         'form': form
     }
     return render(request, 'layouts/model.html', context)
