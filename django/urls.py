@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+
 admin.autodiscover()
 
 {%% set app_name = app_name|lower %%}

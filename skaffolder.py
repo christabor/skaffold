@@ -96,7 +96,8 @@ class Skaffolder:
             /appname/templates/partials
             /appname/templates/partials/forms
 
-            @returns: None
+        Returns:
+            None
         """
 
         # Root must exist first.
@@ -118,11 +119,12 @@ class Skaffolder:
         os.mkdir(self.templates['partials'] + '/models')
 
         # Make static asset folders.
-        os.mkdir(self.app_root + '/images')
-        os.mkdir(self.app_root + '/css')
-        os.mkdir(self.app_root + '/js')
+        os.mkdir(self.app_root + '/static/')
+        os.mkdir(self.app_root + '/static/images')
+        os.mkdir(self.app_root + '/static/css')
+        os.mkdir(self.app_root + '/static/js')
 
-        os.mkdir(self.app_root + '/css/vendor')
-        os.mkdir(self.app_root + '/css/app')
-        os.mkdir(self.app_root + '/js/vendor')
-        os.mkdir(self.app_root + '/js/app')
+        os.mkdir(self.app_root + '/static/css/vendor')
+        os.mkdir(self.app_root + '/static/css/app')
+        os.mkdir(self.app_root + '/static/js/vendor')
+        os.mkdir(self.app_root + '/static/js/app')
