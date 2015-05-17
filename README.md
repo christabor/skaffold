@@ -26,6 +26,16 @@ Skaffold is simple and opinionated. It provides very vanilla layout options, so 
 2. Non web-app developers who want an app up and running quickly.
 3. Mechanization of any sort, for auto-generating applications.
 
+## Dependencies
+
+### All
+* inflection
+* jinja
+
+### Django
+* django-bootstrap
+* factory boy
+
 ## Current support
 
 #### Django
@@ -68,9 +78,5 @@ TBD
 * modelname, properties (obj) - a model name, with child key/value pairs for each model property and value.
 
 ### TODO:
-
-* Inflection is only stubbed out
-* More support beyond django - TBD
-* More support for configuration options, overriding, etc...
-* JS/CSS library support and display options.
+* More support beyond django (Flask, etc...)
 
