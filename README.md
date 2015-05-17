@@ -36,12 +36,10 @@ Currently implemented.
 
 TBD
 
-## JSON options
+## JSON Config options:
 
-See example.json for details.
+**See example.json for details and best examples.**
 
-## Config:
------------
 * project_root (str) - the name of your primary application parent project (required for Django)
 * app_name (str) - the name of your individual application
 * use_admin (bool) - whether or not to use admin (Django only)
