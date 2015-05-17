@@ -21,6 +21,34 @@
             "type": "Golden Retriever",
             "gender": "male",
             "favorite_food": "steak"
+        },
+        "cat": {
+            "type": "Calico",
+            "gender": "female",
+            "favorite_food": "birds"
+        }
+    },
+    "static_config": {
+        "css_config": {
+            "active": true,
+            "libs": ["datatables", "animate", "typeplate"]
+        },
+        "js_config": {
+            "active": true,
+            "libs": ["datatables"]
+        }
+    },
+    "model_config": {
+        "person": {
+            "display_as": "table",
+            "classes": ["table", "table-striped", "table-bordered", "table-hover"],
+            "data_attrs": ["datatable"]
+        },
+        "dog": {
+            "display_as": "list"
+        },
+        "cat": {
+            "display_as": "panel"
         }
     }
 }

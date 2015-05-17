@@ -26,7 +26,7 @@ Skaffold is simple and opinionated. It provides very vanilla layout options, so 
 2. Non web-app developers who want an app up and running quickly.
 3. Mechanization of any sort, for auto-generating applications.
 
-### Current support
+## Current support
 
 #### Django
 
@@ -40,7 +40,7 @@ TBD
 
 See example.json for details.
 
-Config:
+## Config:
 -----------
 * project_root (str) - the name of your primary application parent project (required for Django)
 * app_name (str) - the name of your individual application
@@ -48,19 +48,31 @@ Config:
 
 * staticpages_in_nav (bool) - whether or not to render the staticpage links in the primary navigation
 
-Staticpages:
+### Model Config
+
+* display_as: display_type (str) - how to show a given collection of models on the list (collection) page. Options such as table, list, or panel (boostrap 3) are supported, with perhaps more to come.
+* classes: class list (array) - a list of classes to apply to the html representation
+* data_attrs: attrs list (array) - a list of data attributes to apply to the html representation
+
+### Static assets
+#### CSS/JSS
+* active: (boolean) - if custom css should be shown in base template
+* libs: (array) - a list of names of libraries to add
+
+### Staticpages:
 -----------
 * title: filename (str) - a key/value list of static pages, with k = title, v = filename
 
 * static_pages_filetype (str) - the filetype to use for static pages (e.g html, hbs, templ, etc...)
 
-Models:
+### Models:
 -----------
 * modelname, properties (obj) - a model name, with child key/value pairs for each model property and value.
 
+### TODO:
 
-## TODO:
-
-Inflection is stubbed out and does not work appropriately
-More support beyond django - TBD
+* Inflection is only stubbed out
+* More support beyond django - TBD
+* More support for configuration options, overriding, etc...
+* JS/CSS library support and display options.
 
