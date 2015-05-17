@@ -30,7 +30,7 @@ def {{{ model_name|lower }}}(request):
         'form_mode': 'add',
         'display_type': '{{{ _model_config['display_as'] }}}',
         'display_type_classes': '{{{ _model_config['classes']|join(' ') }}}',
-        'display_type_data_attrs': '{{{ _model_config['data_attrs']|join(' ') }}}',
+        'display_type_data_attrs': ' '.join(map(lambda attr: 'data-{}'.format(attr), {{{ _model_config['data_attrs'] }}})),
         'model_name': '{{{ model_name }}}',
         'collection': serializers.serialize(
             'python', models.{{{ model_name }}}.objects.all()),
