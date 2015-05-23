@@ -66,8 +66,8 @@ TBD
 #### Specifying property types
 
 Types are inferred by default, buy a few must be specified. To avoid making configuration extra work, simple "flags" are specified in place of the equivalent, verbose property:
-* __M2M__: specifes the Many2Many relationship, with the model (e.g. "model": "__M2M__") (Django)
-* __FILE__: specifies that the property should be a FileField (Django)
+* \__M2M__: specifes the Many2Many relationship, with the model (e.g. "model": "\__M2M__") (Django)
+* \__FILE__: specifies that the property should be a FileField (Django)
 
 ### Static assets
 **CSS/JSS**
