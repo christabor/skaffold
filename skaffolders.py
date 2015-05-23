@@ -58,7 +58,7 @@ class DjangoSkaffolder(Skaffolder):
         elif type(prop) == float:
             return 'models.FloatField()'
         elif type(prop) == str or type(prop) == unicode:
-            return 'models.CharField(max_length=50)'
+            return 'models.CharField(blank=True, max_length=50)'
 
     def get_templates(self, filetype='.html'):
         return [template for template
