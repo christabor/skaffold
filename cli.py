@@ -11,7 +11,7 @@ def _clean(root_dir):
     os.system('rm -r ' + root_dir)
 
 
-def from_scratch_django(fixture_data):
+def from_scratch_django(fixture_data, launch=True):
     """Does all work required to setup a completely new application."""
     project_name = fixture_data['config']['project_root']
     app_name = fixture_data['config']['app_name']
@@ -46,8 +46,9 @@ def from_scratch_django(fixture_data):
     os.system('cd {} && python manage.py syncdb --noinput && '
               'python manage.py generate_fixtures'.format(project_name))
 
-    print('Running server!')
-    os.system('cd {} && python manage.py runserver'.format(project_name))
+    if launch:
+        print('Running server!')
+        os.system('cd {} && python manage.py runserver'.format(project_name))
 
     print("""
     Okay! Everything is done.
@@ -69,12 +70,14 @@ def new_app_django(skaffold, fixture_data):
 try:
     if not sys.argv[2]:
         print('No JSON arguments supplied.')
+    print(sys.argv)
     if sys.argv[1] == '--json' and sys.argv[2].endswith('json'):
+        can_launch = '--noserve' not in sys.argv
         json_file = sys.argv[2]
         with open(json_file, 'r') as json_data:
             fixture_data = dict(json.loads(json_data.read()))
             if fixture_data['config']['project_root']:
-                from_scratch_django(fixture_data)
+                from_scratch_django(fixture_data, launch=can_launch)
             else:
                 new_app_django(fixture_data)
     else:
