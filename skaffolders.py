@@ -15,9 +15,12 @@ class DjangoSkaffolder(Skaffolder):
         self.data = []
         self.skeleton_root = 'django'
         self.fixtures = fixtures
-        self.use_admin = self.fixtures['config']['use_admin']
-        self.app_name = self.fixtures['config']['app_name'].lower()
-        self.project_root = self.fixtures['config']['project_root'].lower()
+        self.config = self.fixtures['config']
+        self.use_admin = self.config['use_admin']
+        self.app_name = self.config['app_name'].lower()
+        self.project_root = self.config['project_root'].lower()
+        self.upload_dir = self.config['upload_dir'] if \
+            'upload_dir' in self.config else ''
         self.models = self.fixtures['models']
         self.templates = {
             'root': '',
@@ -25,12 +28,10 @@ class DjangoSkaffolder(Skaffolder):
             'partials': '',
             'pages': '',
         }
-
         curr_dir = os.path.dirname(__file__)
         proj_dir = '{}/{}/{}'.format(
             self.project_root, self.project_root, self.app_name)
         self.app_root = os.path.abspath(os.path.join(curr_dir, proj_dir))
-
         # Setup template structure
         self.make_app_dirs()
         # Must set custom strings, since we want to keep some of the
@@ -48,6 +49,7 @@ class DjangoSkaffolder(Skaffolder):
         self.env.filters['singularize'] = self.get_singular_inflection
         self.env.filters['model_field'] = self.get_model_field_type
         self.env.filters['factory_field'] = self.get_modelfactory_field_type
+        self.env.filters['is_list'] = self.is_list
 
     def get_model_field_type(self, prop):
         """Given a prop, returns the closest django model field type."""
@@ -71,7 +73,8 @@ class DjangoSkaffolder(Skaffolder):
         return self.generate_thing('admin.py', all_models=self.models)
 
     def generate_models(self):
-        return self.generate_thing('models.py', all_models=self.models)
+        return self.generate_thing(
+            'models.py', upload_dir=self.upload_dir, all_models=self.models)
 
     def generate_views(self):
         return self.generate_thing(

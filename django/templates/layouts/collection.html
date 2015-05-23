@@ -8,14 +8,12 @@
 
     {% if display_type == 'table' %}
         {% include 'partials/models/as-table.html' %}
-    {% endif %}
-
-    {% if display_type == 'list' %}
+    {% elif display_type == 'list' %}
         {% include 'partials/models/as-list.html' %}
-    {% endif %}
-
-    {% if display_type == 'panel' %}
+    {% elif display_type == 'panel' %}
         {% include 'partials/models/as-panel.html' %}
+    {% else %}
+        {% include 'partials/models/as-table.html' %}
     {% endif %}
 
     {% endwith %}

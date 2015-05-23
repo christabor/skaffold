@@ -50,9 +50,10 @@ TBD
 
 **See example.json for details and best examples.**
 
+* upload_to (str) - the path *beyond what is already defined in settings file*. Must end in trailing slash. (Django)
 * project_root (str) - the name of your primary application parent project (required for Django)
 * app_name (str) - the name of your individual application
-* use_admin (bool) - whether or not to use admin (Django only)
+* use_admin (bool) - whether or not to use admin (Django)
 
 * staticpages_in_nav (bool) - whether or not to render the staticpage links in the primary navigation
 
@@ -61,6 +62,12 @@ TBD
 * display_as: display_type (str) - how to show a given collection of models on the list (collection) page. Options such as table, list, or panel (boostrap 3) are supported, with perhaps more to come.
 * classes: class list (array) - a list of classes to apply to the html representation
 * data_attrs: attrs list (array) - a list of data attributes to apply to the html representation
+
+#### Specifying property types
+
+Types are inferred by default, buy a few must be specified. To avoid making configuration extra work, simple "flags" are specified in place of the equivalent, verbose property:
+* __M2M__: specifes the Many2Many relationship, with the model (e.g. "model": "__M2M__") (Django)
+* __FILE__: specifies that the property should be a FileField (Django)
 
 ### Static assets
 **CSS/JSS**

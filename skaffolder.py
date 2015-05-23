@@ -59,6 +59,9 @@ class Skaffolder:
                 self.app_root, subdirectory, filename), 'w') as newfile:
             newfile.write(rendered + '\n')
 
+    def is_list(self, item):
+        return isinstance(item, list)
+
     def get_singular_inflection(self, word):
         return singularize(word)
 

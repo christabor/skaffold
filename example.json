@@ -2,7 +2,8 @@
     "config": {
         "project_root": "my_skaffolded",
         "app_name": "cool_app",
-        "use_admin": true
+        "use_admin": true,
+        "upload_dir": "media/foo/"
     },
     "staticpages_in_nav": true,
     "staticpages_filetype": "html",
@@ -18,14 +19,25 @@
             "dob": "00/00/1900"
         },
         "dog": {
+            "pic": "__FILE__",
             "type": "Golden Retriever",
-            "gender": "male",
-            "favorite_food": "steak"
+            "gender": ["male", "female"],
+            "favorite_food": "steak",
+            "pet": "__M2M__"
+        },
+        "owner": {
+            "name": "Angus",
+            "pet": "__M2M__"
+        },
+        "pet": {
+            "owner": "__M2M__"
         },
         "cat": {
+            "pic": "__FILE__",
             "type": "Calico",
-            "gender": "female",
-            "favorite_food": "birds"
+            "gender": ["male", "female"],
+            "favorite_food": "birds",
+            "pet": "__M2M__"
         }
     },
     "static_config": {
@@ -37,6 +49,10 @@
             "active": true,
             "libs": ["datatables"]
         }
+    },
+    "model_config_options": {
+        "export": true,
+        "export_options": ["csv", "xml", "pdf"]
     },
     "model_config": {
         "person": {
