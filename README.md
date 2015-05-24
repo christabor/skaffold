@@ -82,7 +82,7 @@ Types are inferred by default, buy a few must be specified. To avoid making conf
 * `static_pages_filetype`: the filetype to use for static pages (e.g html, hbs, templ, etc...)
 
 ### Models:
-* modelname, properties (obj) - a model name, with child key/value pairs for each model property and value.
+* `modelname, {key: val, key: val}` (map) - a model name, with child key/value pairs for each model property and value.
 
 ### TODO:
 * More support beyond django (Flask, etc...)
