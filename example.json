@@ -16,7 +16,7 @@
         "person": {
             "name": "Joe",
             "age": 28,
-            "dob": "00/00/1900"
+            "dob": "__DATE__"
         },
         "dog": {
             "pic": "__FILE__",

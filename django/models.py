@@ -16,6 +16,8 @@ class {{{ model_name }}}(models.Model):
     )
     {{{ prop }}} = models.CharField(
         max_length=50, blank=False, choices={{{ prop|pluralize }}})
+    {%% elif value == '__DATE__' %%}
+    {{{ prop }}} = models.DateTimeField()
     {%% elif value == '__FILE__' %%}
     {{{ prop }}} = models.FileField(
         help_text='Upload your {{{ prop|pluralize }}} here.',
