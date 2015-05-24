@@ -13,9 +13,14 @@
     <title>{{{ app_name }}} - welcome!</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     {%% if css_config['active'] %%}
-        {%% for css_file in css_config['libs'] %%}
+    <!-- External CSS -->
+    {%% for css_file in css_config['external_libs'] %%}
+    <link rel="stylesheet" href="{{{ css_file }}}">
+    {%% endfor %%}
+    <!-- App CSS -->
+    {%% for css_file in css_config['libs'] %%}
     <link rel="stylesheet" href="{% static "css/vendor/{{{ css_file }}}.css" %}">
-        {%% endfor %%}
+    {%% endfor %%}
     {%% endif %%}
     <link rel="stylesheet" href="{% static "css/app/main.css" %}">
     {% block extra_style %}{% endblock %}
@@ -52,17 +57,23 @@
 <![endif]-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 {%% if js_config['active'] %%}
-    {%% for js_file in js_config['libs'] %%}
+<!-- External Javascript -->
+{%% for js_url in js_config['external_libs'] %%}
+<script src="{{{ js_url }}}"></script>
+{%% endfor %%}
+<!-- App Javascript -->
+{%% for js_file in js_config['libs'] %%}
 <script src="{% static "js/{{{ js_file }}}.js" %}"></script>
-    {%% endfor %%}
-    <script>
-        $(document).ready(function(){
-            {%% if 'datatables' in js_config['libs'] %%}
-            $(['data-datatable']).datatable();
-            {%% endif %%}
-        });
-    </script>
+{%% endfor %%}
+<script>
+    $(document).ready(function(){
+        {%% if 'datatables' in js_config['libs'] %%}
+        $(['data-datatable']).datatable();
+        {%% endif %%}
+    });
+</script>
 {%% endif %%}
 {% block extra_scripts %}{% endblock %}
 </body>

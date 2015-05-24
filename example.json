@@ -49,7 +49,10 @@
         },
         "js_config": {
             "active": true,
-            "libs": ["datatables"]
+            "libs": ["datatables"],
+            "external_libs": [
+                "http://code.jquery.com/ui/1.11.3/jquery-ui.js"
+            ]
         }
     },
     "model_config_options": {

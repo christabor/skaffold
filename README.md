@@ -74,6 +74,9 @@ Types are inferred by default, buy a few must be specified. To avoid making conf
 **CSS/JSS**
 * `active`: (boolean) - if custom css should be shown in base template
 * `libs`: (array) - a list of names of libraries to add
+* `external_libs`: (array) - a list of urls to external libraries to add (always comes /before/ app libraries)
+
+**CSS**
 * `bootstrap`:`fluid`: (boolean) - use fluid container or not (bootstrap 3, Django)
 
 ### Staticpages:
