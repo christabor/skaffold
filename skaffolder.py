@@ -1,15 +1,5 @@
 import os
-from inflection import pluralize
-from inflection import singularize
-
-#   TODO:
-#   css/js/images + app/vendor
-#
-# Finish templates
-#      - Add css / js / static dir
-#   proper inflection methods
-#   model detail page content.
-#   docstrings and params
+import inflection
 
 
 class Skaffolder:
@@ -63,7 +53,7 @@ class Skaffolder:
         return isinstance(item, list)
 
     def get_singular_inflection(self, word):
-        return singularize(word)
+        return inflection.singularize(word)
 
     def get_plural_inflection(self, word):
         """Gets proper plural inflection for a word.
@@ -71,7 +61,21 @@ class Skaffolder:
                 model: cat, collection: cats
                 model: cactus, collection: cacti
         """
-        return pluralize(word)
+        return inflection.pluralize(word)
+
+    def humanize(self, word):
+        return inflection.humanize()
+
+    def questionize(self, word):
+        """If a user follows the convention of using `is_something`, or
+        `has_something`, for a boolean value, the property text will
+        automatically be converted into a more human-readable
+        format, e.g. 'Something?' for is_ and Has Something? for has_ """
+        if word.startswith('is_'):
+            return '{}?'.format(word[3:])
+        elif word.startswith('has_'):
+            return '{}?'.format(word[4:])
+        return word
 
     def get_modelfactory_field_type(self, prop):
         """Given a prop, returns the closest factory boy field type."""
