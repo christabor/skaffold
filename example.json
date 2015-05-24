@@ -3,7 +3,10 @@
         "project_root": "my_skaffolded",
         "app_name": "cool_app",
         "use_admin": true,
-        "upload_dir": "media/foo/"
+        "upload_dir": "media/foo/",
+        "bootstrap": {
+            "fluid": false
+        }
     },
     "staticpages_in_nav": true,
     "staticpages_filetype": "html",
@@ -26,8 +29,7 @@
             "pet": "__M2M__"
         },
         "owner": {
-            "name": "Angus",
-            "pet": "__M2M__"
+            "name": "Angus"
         },
         "pet": {
             "owner": "__M2M__"

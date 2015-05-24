@@ -24,7 +24,7 @@
     <header>
         {% include "partials/navigation.html" %}
     </header>
-    <div role="main" id="main" class="container">
+    <div role="main" id="main" class="{{{ 'container-fluid' if bootstrap_config['fluid'] else 'container' }}}">
         <div class="row">
             <div class="col-md-12">
                 {% bootstrap_messages %}

@@ -124,14 +124,17 @@ class DjangoSkaffolder(Skaffolder):
 
     def generate_layouts(self):
         html_templates = self.get_templates()
+        bootstrap_config = self.config['bootstrap'] if \
+            'bootstrap' in self.config else []
         for template in html_templates:
             # Filename relativity (/foo/bar/bim) is maintained
-            # from get_templates() so that subdirectories
-            # can be mirrored from the skeleton_root dir.
+            # from `get_templates()` so that subdirectories
+            # can be mirrored from the `skeleton_root` dir.
             self.data.append({
                 'file': template,
                 'output': self.generate_thing(
                     template,
+                    bootstrap_config=bootstrap_config,
                     staticpages=self.fixtures['staticpages'],
                     staticpages_in_nav=self.fixtures['staticpages_in_nav'],
                     css_config=self.fixtures['static_config']['css_config'],
