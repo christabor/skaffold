@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse" role="navigation">
     <div role="main" id="main" class="{{{ 'container-fluid' if bootstrap_config['fluid'] else 'container' }}}">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -9,19 +9,19 @@
       </button>
       <a class="navbar-brand" href="/">{{{ app_name|capitalize }}}</a>
     </div>
-    <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+    <div class="collapse navbar-collapse" id="navbar-main">
       <ul class="nav navbar-nav">
-        <li>
+        <li {% if current_page == 'index' %}class="active"{% endif %}>
           <a href="{% url '{{{ project_root }}}.{{{ app_name }}}.views.render_static' page='index' %}" title="Home">Home</a>
         </li>
         {%% for active_model in all_models %%}
-        <li>
+        <li {% if current_page == '{{{ active_model|lower }}}' %}class="active"{% endif %}>
           <a href="{% url '{{{ project_root }}}.{{{ app_name }}}.views.{{{ active_model|lower}}}' %}" title="{{{ active_model }}}">{{{ active_model|capitalize }}}</a>
         </li>
         {%% endfor %%}
         {%% if staticpages_in_nav %%}
         {%% for title, staticpage in staticpages.iteritems() %%}
-        <li>
+        <li {% if current_page == '{{{ staticpage }}}' %}class="active"{% endif %}>
           <a href="{% url '{{{ project_root }}}.{{{ app_name }}}.views.render_static' page='{{{ staticpage|lower }}}' %}" title="{{{ title }}}">{{{ staticpage|capitalize }}}</a>
         </li>
         {%% endfor %%}

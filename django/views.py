@@ -11,7 +11,8 @@ import forms
 
 
 def render_static(request, page):
-    return render(request, 'pages/{}.html'.format(page))
+    context = {'current_page': page}
+    return render(request, 'pages/{}.html'.format(page), context)
 
 
 {%% for model_name in all_models %%}
@@ -29,6 +30,7 @@ def {{{ model_name|lower }}}(request):
         form = forms.{{{ model_name }}}Form()
     context = {
         'form_mode': 'add',
+        'current_page': '{{{ model_name|lower }}}',
         'display_type': '{{{ _model_config['display_as'] }}}',
         'display_type_classes': '{{{ _model_config['classes']|join(' ') }}}',
         'display_type_data_attrs': ' '.join(map(lambda attr: 'data-{}'.format(attr), {{{ dattrs }}})),
@@ -55,6 +57,7 @@ def {{{ model_name|lower }}}_detail(request, pk):
         form = forms.{{{ model_name }}}Form(instance={{{ model_name|lower }}}_instance)
     context = {
         'form_mode': 'edit',
+        'current_page': '{{{ model_name|lower }}}',
         'model': {{{ model_name|lower }}}_instance,
         'model_name': '{{{ model_name|singularize }}}',
         'form': form
