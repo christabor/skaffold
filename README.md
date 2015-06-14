@@ -69,7 +69,7 @@ TBD
 
 ### Model Config
 
-* `display_as`: how to show a given collection of models on the list (collection) page. Options such as table, list, or panel (boostrap 3) are supported, with perhaps more to come.
+* `display_as`: how to show a given collection of models on the list (collection) page. Options "table", "list", or "panel" (boostrap 3) are supported.
 * `classes`: class list (array) - a list of classes to apply to the html representation
 * `data_attrs`: attrs list (array) - a list of data attributes to apply to the html representation
 
@@ -92,7 +92,6 @@ Types are inferred by default, but a few must be specified. To avoid making conf
 
 ### Staticpages:
 * `title`: filenam`: a key/value list of static pages, with k = title, v = filename
-
 * `static_pages_filetype`: the filetype to use for static pages (e.g html, hbs, templ, etc...)
 
 ### Models:
@@ -100,4 +99,3 @@ Types are inferred by default, but a few must be specified. To avoid making conf
 
 ### TODO:
 * More support beyond django (Flask, etc...)
-
