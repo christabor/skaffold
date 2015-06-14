@@ -28,12 +28,12 @@ Skaffold is simple and opinionated. It provides very vanilla layout options, so 
 
 ## Using the command line interface (recommended)
 
-A script to load your example.json file and configuration is provided by cli.py. To use, just run `python cli.py --json *yourfile.json*`
+A script to load your example.json file and configuration is provided by cli.py. To use, just run `python cli.py --json **yourfile.json**`
 
 See the cli for more details. All options provided by cli arguments:
 
-`--noserve`: do not serve the django application after building
-`--json`: required to use a json configuration file.
+* `--noserve`: do not serve the django application after building
+* `--json`: required to use a json configuration file.
 
 ## Dependencies
 
