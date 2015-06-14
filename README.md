@@ -99,3 +99,7 @@ Types are inferred by default, but a few must be specified. To avoid making conf
 
 ### TODO:
 * More support beyond django (Flask, etc...)
+
+### Support / donations
+
+<img src="//img.shields.io/gratipay/christabor.svg">
