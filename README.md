@@ -90,7 +90,7 @@ Types are inferred by default, but a few must be specified. To avoid making conf
 * `bootstrap`:
     - `fluid`: (boolean) - use fluid container or not (bootstrap 3, Django)
     - `form_display`: (string) - how to display the form, using bootstrap form styles. Options are `horizontal` or `inline`. See [bootstrap](http://getbootstrap.com/css/#forms) for examples and [django-bootstrap3](http://django-bootstrap3.readthedocs.org/en/latest/templatetags.html?highlight=layout) for the actual implementation.
-    - `default_btn_size`: (string) - the default button size for all plainly rendered buttons in the template. See [bootstrap buttons](http://getbootstrap.com/css/#buttons-options) for more details.
+    - `default_btn_size`: (string) - the default button size for all plainly rendered buttons in the template. See [bootstrap buttons](http://getbootstrap.com/css/#buttons-sizes) for more details.
 
 ### Staticpages:
 * `title`: filenam`: a key/value list of static pages, with k = title, v = filename
