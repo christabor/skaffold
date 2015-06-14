@@ -9,7 +9,7 @@
     </span>
     {% endfor %}
     {% endif %}
-    {% bootstrap_form form %}
+    {% bootstrap_form form layout='{{{ form_display }}}' %}
     {% buttons %}
     <button type="submit" class="btn btn-primary">
         {% bootstrap_icon "checkmark" %} Save

@@ -1,0 +1,37 @@
+{
+    "config": {
+        "project_root": "",
+        "app_name": "",
+        "use_admin": true,
+        "upload_dir": "media/",
+        "bootstrap": {
+            "form_display": "inline",
+            "fluid": false
+        }
+    },
+    "staticpages_in_nav": true,
+    "staticpages_filetype": "html",
+    "staticpages": {
+    },
+    "models": {
+    },
+    "static_config": {
+        "css_config": {
+            "active": true,
+            "libs": []
+        },
+        "js_config": {
+            "active": true,
+            "libs": [],
+            "external_libs": [
+                "http://code.jquery.com/ui/1.11.3/jquery-ui.js"
+            ]
+        }
+    },
+    "model_config_options": {
+        "export": true,
+        "export_options": []
+    },
+    "model_config": {
+    }
+}

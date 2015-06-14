@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import collections
 from skaffolders import FlaskSkaffolder
 from skaffolders import DjangoSkaffolder
 
@@ -66,6 +67,18 @@ def new_app_django(skaffold, fixture_data):
     skaffold.generate_all()
 
 
+def mergedicts(d, u):
+    """Credit: stackoverflow.com/questions/3232943
+        /update-value-of-a-nested-dictionary-of-varying-depth"""
+    for k, v in u.iteritems():
+        if isinstance(v, collections.Mapping):
+            r = mergedicts(d.get(k, {}), v)
+            d[k] = r
+        else:
+            d[k] = u[k]
+    return d
+
+
 # Run when file is run
 try:
     if not sys.argv[2]:
@@ -74,12 +87,15 @@ try:
     if sys.argv[1] == '--json' and sys.argv[2].endswith('json'):
         can_launch = '--noserve' not in sys.argv
         json_file = sys.argv[2]
-        with open(json_file, 'r') as json_data:
-            fixture_data = dict(json.loads(json_data.read()))
-            if fixture_data['config']['project_root']:
-                from_scratch_django(fixture_data, launch=can_launch)
-            else:
-                new_app_django(fixture_data)
+        with open('defaults.json', 'r') as default_json_data:
+            json_config = dict(json.loads(default_json_data.read()))
+            with open(json_file, 'r') as json_data:
+                extra_config = dict(json.loads(json_data.read()))
+                json_config = mergedicts(json_config, extra_config)
+                if json_config['config']['project_root']:
+                    from_scratch_django(json_config, launch=can_launch)
+                else:
+                    new_app_django(json_config)
     else:
         print('`{}` is not a valid .json file'.format(sys.argv[2]))
 except IndexError:

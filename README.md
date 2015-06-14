@@ -26,6 +26,15 @@ Skaffold is simple and opinionated. It provides very vanilla layout options, so 
 2. Non web-app developers who want an app up and running quickly.
 3. Mechanization of any sort, for auto-generating applications.
 
+## Using the command line interface (recommended)
+
+A script to load your example.json file and configuration is provided by cli.py. To use, just run `python cli.py --json *yourfile.json*`
+
+See the cli for more details. All options provided by cli arguments:
+
+`--noserve`: do not serve the django application after building
+`--json`: required to use a json configuration file.
+
 ## Dependencies
 
 ### All
@@ -78,6 +87,7 @@ Types are inferred by default, but a few must be specified. To avoid making conf
 
 **CSS**
 * `bootstrap`:`fluid`: (boolean) - use fluid container or not (bootstrap 3, Django)
+* `form_display`: (string) - how to display the form, using bootstrap form styles. Options are `horizontal` or `inline`. See [bootstrap](http://getbootstrap.com/css/#forms) for examples and [django-bootstrap3](http://django-bootstrap3.readthedocs.org/en/latest/templatetags.html?highlight=layout) for the actual implementation.
 
 ### Staticpages:
 * `title`: filenam`: a key/value list of static pages, with k = title, v = filename

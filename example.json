@@ -5,6 +5,7 @@
         "use_admin": true,
         "upload_dir": "media/foo/",
         "bootstrap": {
+            "form_display": "inline",
             "fluid": false
         }
     },

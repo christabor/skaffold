@@ -19,8 +19,7 @@ class DjangoSkaffolder(Skaffolder):
         self.use_admin = self.config['use_admin']
         self.app_name = self.config['app_name'].lower()
         self.project_root = self.config['project_root'].lower()
-        self.upload_dir = self.config['upload_dir'] if \
-            'upload_dir' in self.config else ''
+        self.upload_dir = self.config['upload_dir']
         self.models = self.fixtures['models']
         self.templates = {
             'root': '',
@@ -119,13 +118,13 @@ class DjangoSkaffolder(Skaffolder):
         that can be embedded into any page."""
         self.save(
             self.generate_thing(
-                'templates/partials/forms/modelform-generic.html'),
+                'templates/partials/forms/modelform-generic.html',
+                form_display=self.config['bootstrap']['form_display']),
             'modelform-generic.html', subdirectory='templates/partials/forms/')
 
     def generate_layouts(self):
         html_templates = self.get_templates()
-        bootstrap_config = self.config['bootstrap'] if \
-            'bootstrap' in self.config else []
+        bootstrap_config = self.config['bootstrap']
         for template in html_templates:
             # Filename relativity (/foo/bar/bim) is maintained
             # from `get_templates()` so that subdirectories
