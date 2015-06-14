@@ -1,5 +1,6 @@
-Skaffold - auto scaffolding for your MVC web applications!
+Skaffold
 ============================================================
+auto scaffolding for your MVC web applications!
 
 # How does it work?
 
