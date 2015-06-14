@@ -31,9 +31,12 @@ def from_scratch_django(fixture_data, launch=True):
 
     print('Updating settings and urlconf files...')
     with open(settings_file, 'a') as django_settings:
-        django_settings.write(
-            "\nINSTALLED_APPS += ('{project}.{app}', 'bootstrap3',)\n".format(
-                project=project_name, app=app_name))
+        default_apps = [
+            '"{project}.{app}"'.format(project=project_name, app=app_name),
+            '"bootstrap3"',
+        ]
+        apps = '({})'.format(', '.join(default_apps))
+        django_settings.write("\nINSTALLED_APPS += {apps}\n".format(apps=apps))
         django_settings.close()
 
     with open(root_urlconf, 'a') as urlconf:
