@@ -83,7 +83,6 @@ def mergedicts(d, u):
 try:
     if not sys.argv[2]:
         print('No JSON arguments supplied.')
-    print(sys.argv)
     if sys.argv[1] == '--json' and sys.argv[2].endswith('json'):
         can_launch = '--noserve' not in sys.argv
         json_file = sys.argv[2]

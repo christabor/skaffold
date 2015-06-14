@@ -27,6 +27,7 @@ class DjangoSkaffolder(Skaffolder):
             'partials': '',
             'pages': '',
         }
+        self.bootstrap = self.config['bootstrap']
         curr_dir = os.path.dirname(__file__)
         proj_dir = '{}/{}/{}'.format(
             self.project_root, self.project_root, self.app_name)
@@ -116,10 +117,10 @@ class DjangoSkaffolder(Skaffolder):
     def generate_form_partials(self):
         """Creates all forms from model forms, as reusable blocks
         that can be embedded into any page."""
-        self.save(
+        return self.save(
             self.generate_thing(
                 'templates/partials/forms/modelform-generic.html',
-                form_display=self.config['bootstrap']['form_display']),
+                bootstrap_config=self.config['bootstrap']),
             'modelform-generic.html', subdirectory='templates/partials/forms/')
 
     def generate_layouts(self):
