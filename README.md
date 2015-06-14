@@ -102,4 +102,4 @@ Types are inferred by default, but a few must be specified. To avoid making conf
 
 ### Support / donations
 
-<img src="//img.shields.io/gratipay/christabor.svg">
+![Donation badge](https://img.shields.io/gratipay/christabor.svg)
