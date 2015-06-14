@@ -9,7 +9,7 @@
             <li><strong>{{ field }}</strong>: {{ value }}</li>
         {% endfor %}
         </ul>
-        <a href="{% url view_url model.pk %}" class="btn btn-xs btn-info">View</a>
+        <a href="{% url view_url model.pk %}" class="btn btn-info {{{ bootstrap_config['default_btn_size'] }}}">View</a>
     </div>
 </div>
 {% endfor %}

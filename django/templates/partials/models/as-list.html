@@ -4,7 +4,7 @@
         <li><strong>{{ field }}</strong>: {{ value }}</li>
         {% endfor %}
         <li>
-            <a href="{% url view_url model.pk %}" class="btn btn-xs btn-info">View #{{ model.pk }}</a>
+            <a href="{% url view_url model.pk %}" class="btn btn-info {{{ bootstrap_config['default_btn_size'] }}}">View #{{ model.pk }}</a>
         </li>
     </ul>
 {% endfor %}

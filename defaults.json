@@ -6,7 +6,8 @@
         "upload_dir": "media/",
         "bootstrap": {
             "form_display": "inline",
-            "fluid": false
+            "fluid": false,
+            "default_btn_size": "btn-md"
         }
     },
     "staticpages_in_nav": true,
