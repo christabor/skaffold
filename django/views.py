@@ -84,7 +84,7 @@ def {{{ model_name|lower }}}_delete(request, pk):
     {{{ model_name|lower }}}_instance.delete()
     messages.add_message(
         request, messages.SUCCESS, 'Successfully deleted {{{ model_name }}} #{}'.format(pk))
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('{{{ project_root }}}.{{{ app_name }}}.views.{{{ model_name|lower }}}'))
 
 
 {%% endfor %%}

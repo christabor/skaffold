@@ -3,6 +3,7 @@
         {% for model in collection %}
         {% if forloop.first %}
         <tr>
+            <th></th>
             <th>ID</th>
             {% for field, value in model.fields.items %}
             <th>{{ field }}</th>
@@ -15,6 +16,9 @@
     <tbody>
         {% for model in collection %}
         <tr>
+            <td>
+                <a href="{% url delete_url model.pk %}" class="btn btn-danger {{{ bootstrap_config['default_btn_size'] }}}">Delete</a>
+            </td>
             <td>{{ model.pk }}</td>
             {% for field, value in model.fields.items %}
             <td>{{ value }}</td>

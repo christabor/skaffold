@@ -79,6 +79,7 @@ class DjangoSkaffolder(Skaffolder):
     def generate_views(self):
         return self.generate_thing(
             'views.py',
+            project_root=self.project_root,
             app_name=self.app_name,
             all_models=self.models,
             model_config=self.fixtures['model_config'])

@@ -10,6 +10,7 @@
         {% endfor %}
         </ul>
         <a href="{% url view_url model.pk %}" class="btn btn-info {{{ bootstrap_config['default_btn_size'] }}}">View</a>
+        <a href="{% url delete_url model.pk %}" class="btn btn-danger {{{ bootstrap_config['default_btn_size'] }}}">Delete</a>
     </div>
 </div>
 {% endfor %}

@@ -1,5 +1,8 @@
 {% for model in collection %}
     <ul class="{{ display_type_classes }}" {{ display_type_data_attrs }}>
+        <li>
+            <a href="{% url delete_url model.pk %}" class="btn btn-danger {{{ bootstrap_config['default_btn_size'] }}}">Delete</a>
+        </li>
         {% for field, value in model.fields.items %}
         <li><strong>{{ field }}</strong>: {{ value }}</li>
         {% endfor %}

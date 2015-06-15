@@ -5,6 +5,7 @@
 <div class="col-md-12">
     <h1>All {{ model_name_nice }}</h1>
     {% with "{{{ app_name }}}.views."|add:model_name|lower|add:"_detail" as view_url %}
+    {% with "{{{ app_name }}}.views."|add:model_name|lower|add:"_delete" as delete_url %}
 
     {% if display_type == 'table' %}
         {% include 'partials/models/as-table.html' %}
@@ -16,6 +17,7 @@
         {% include 'partials/models/as-table.html' %}
     {% endif %}
 
+    {% endwith %}
     {% endwith %}
 
     <hr>
