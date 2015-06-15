@@ -4,6 +4,8 @@
         "app_name": "",
         "use_admin": true,
         "upload_dir": "media/",
+        "export": true,
+        "export_options": ["xml", "json", "yaml"],
         "bootstrap": {
             "form_display": "inline",
             "fluid": false,
@@ -28,10 +30,6 @@
                 "http://code.jquery.com/ui/1.11.3/jquery-ui.js"
             ]
         }
-    },
-    "model_config_options": {
-        "export": true,
-        "export_options": []
     },
     "model_config": {
     }

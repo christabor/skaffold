@@ -27,6 +27,26 @@ def {{{ model_name|lower }}}(request):
             messages.add_message(
                 request, messages.SUCCESS, 'Successfully added new {{{ model_name }}}')
     else:
+        {%% if config['export'] %%}
+        {%% if 'json' in config['export_options'] %%}
+        if 'to_json' in request.GET:
+            return HttpResponse(
+                serializers.serialize('json', models.{{{ model_name }}}.objects.all()),
+                content_type='application/json')
+        {%% endif %%}
+        {%% if 'xml' in config['export_options'] %%}
+        if 'to_xml' in request.GET:
+            return HttpResponse(
+                serializers.serialize('xml', models.{{{ model_name }}}.objects.all()),
+                content_type='application/xml')
+        {%% endif %%}
+        {%% if 'yaml' in config['export_options'] %%}
+        if 'to_yaml' in request.GET:
+            return HttpResponse(
+                serializers.serialize('yaml', models.{{{ model_name }}}.objects.all()),
+                content_type='application/x-yaml')
+        {%% endif %%}
+        {%% endif %%}
         form = forms.{{{ model_name }}}Form()
     context = {
         'form_mode': 'add',

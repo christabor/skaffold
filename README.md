@@ -60,18 +60,19 @@ TBD
 
 **See example.json for details and best examples.**
 
-* `upload_to`: the path *beyond what is already defined in the settings file*. Must end in trailing slash. (Django)
+* `upload_dir`: the path *beyond what is already defined in the settings file*. Must end in trailing slash. (Django)
 * `project_root`: the name of your primary application parent project (required for Django)
 * `app_name`: the name of your individual application
-* `use_admin` (bool) - whether or not to use admin (Django)
-
-* `staticpages_in_nav` (bool) - whether or not to render the staticpage links in the primary navigation
+* `use_admin`: (bool) - enable/disable admin (Django)
+* `export`: (bool) - enable/disable exporting of models from view (Django)
+* `export_options`: (list) - Acceptable serialized export options. Options are *xml*, *json*, and *yaml*.
+* `staticpages_in_nav`: (bool) - whether or not to render the staticpage links in the primary navigation
 
 ### Model Config
 
 * `display_as`: how to show a given collection of models on the list (collection) page. Options "table", "list", or "panel" (boostrap 3) are supported.
-* `classes`: class list (array) - a list of classes to apply to the html representation
-* `data_attrs`: attrs list (array) - a list of data attributes to apply to the html representation
+* `classes`: class list (list) - a list of classes to apply to the html representation
+* `data_attrs`: attrs list (list) - a list of data attributes to apply to the html representation
 
 #### Specifying property types
 
@@ -83,8 +84,8 @@ Types are inferred by default, but a few must be specified. To avoid making conf
 ### Static assets
 **CSS/JSS**
 * `active`: (boolean) - if custom css should be shown in base template
-* `libs`: (array) - a list of names of libraries to add
-* `external_libs`: (array) - a list of urls to external libraries to add (always comes _before_ app libraries)
+* `libs`: (list) - a list of names of libraries to add
+* `external_libs`: (list) - a list of urls to external libraries to add (always comes _before_ app libraries)
 
 **CSS**
 * `bootstrap`:

@@ -67,6 +67,7 @@ class DjangoSkaffolder(Skaffolder):
                 in self.env.list_templates() if template.endswith(filetype)]
 
     def generate_thing(self, thing, **kwargs):
+        kwargs.update({'config': self.config})
         return self.env.get_template(thing).render(**kwargs)
 
     def generate_admin(self):
