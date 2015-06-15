@@ -116,16 +116,16 @@ class Skaffolder:
 
         # Make static asset folders.
         static = self.app_root + '/static/'
-        static_image = self.app_root + '/static/js/'
-        static_css = self.app_root + '/static/images/'
-        static_js = self.app_root + '/static/css/'
+        static_image = self.app_root + '/static/images/'
+        static_css = self.app_root + '/static/css/'
+        static_js = self.app_root + '/static/js/'
 
         os.mkdir(static)
         os.mkdir(static_image)
         os.mkdir(static_css)
         os.mkdir(static_js)
 
-        os.mkdir(static_css + '/vendor')
+        os.mkdir(static_css + 'vendor')
         os.mkdir(static_css + 'app')
         os.mkdir(static_js + 'vendor')
         os.mkdir(static_js + 'app')
