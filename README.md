@@ -61,7 +61,8 @@ TBD
 **See example.json for details and best examples.**
 
 * `upload_dir`: the path *beyond what is already defined in the settings file*. Must end in trailing slash. (Django)
-* `project_root`: the name of your primary application parent project (required for Django)
+* `absolute_path`: The absolute path to save all files and folders. Supports `~` to indicate the home directory.
+* `project_root`: the name of your primary application parent project
 * `app_name`: the name of your individual application
 * `use_admin`: (bool) - enable/disable admin (Django)
 * `export`: (bool) - enable/disable exporting of models from view (Django)

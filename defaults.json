@@ -1,5 +1,6 @@
 {
     "config": {
+        "absolute_path": "~/skaffolded-projects/",
         "project_root": "",
         "app_name": "",
         "use_admin": true,

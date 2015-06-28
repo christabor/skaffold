@@ -2,7 +2,6 @@ import os
 import sys
 import json
 import collections
-from skaffolders import FlaskSkaffolder
 from skaffolders import DjangoSkaffolder
 
 
@@ -14,20 +13,29 @@ def _clean(root_dir):
 
 def from_scratch_django(fixture_data, launch=True):
     """Does all work required to setup a completely new application."""
-    project_name = fixture_data['config']['project_root']
-    app_name = fixture_data['config']['app_name']
-    root_dir = os.getcwd() + '/' + project_name + '/'
-    root_urlconf = root_dir + '/' + project_name + '/urls.py'
-    settings_file = root_dir + '/' + project_name + '/settings.py'
+    django = DjangoSkaffolder(fixture_data)
+    project_name = django.project_name
+    app_name = django.app_name
 
-    _clean(root_dir)
-
-    print('Adding new django project...')
+    _clean(django.project_root)
+    # Move into the newly created directory.
+    os.chdir(django.abspath)
+    # print('Adding new django project...')
     os.system('django-admin.py startproject ' + project_name)
+    # Move into subdir (django project) to setup single app structure
+    django.project_root = '{}{}/'.format(
+        django.project_root, django.project_name)
+    django.app_root = '{}{}/'.format(django.project_root, django.app_name)
 
-    print('Skaffolding app structure...')
-    django_skaffold = DjangoSkaffolder(fixture_data)
-    new_app_django(django_skaffold, fixture_data)
+    os.chdir(django.project_root)
+    os.mkdir(django.app_root)
+    # Setup template structure
+    django.make_app_dirs()
+    # Generate data for django *after* django creates the app.
+    new_app_django(django, app_name, project_name)
+
+    root_urlconf = django.project_root + 'urls.py'
+    settings_file = django.project_root + 'settings.py'
 
     print('Updating settings and urlconf files...')
     with open(settings_file, 'a') as django_settings:
@@ -46,13 +54,14 @@ def from_scratch_django(fixture_data, launch=True):
                 app=app_name))
         urlconf.close()
 
+    os.chdir('../')
     print('Creating database tables and fixture data...')
-    os.system('cd {} && python manage.py syncdb --noinput && '
-              'python manage.py generate_fixtures'.format(project_name))
+    os.system('python manage.py syncdb --noinput && '
+              'python manage.py generate_fixtures')
 
     if launch:
         print('Running server!')
-        os.system('cd {} && python manage.py runserver'.format(project_name))
+        os.system('python manage.py runserver')
 
     print("""
     Okay! Everything is done.
@@ -62,11 +71,9 @@ def from_scratch_django(fixture_data, launch=True):
     """.format(project_name, app_name, settings=settings_file))
 
 
-def new_app_django(skaffold, fixture_data):
+def new_app_django(skaffold, app, project):
     """A quick util to access the generator from command line"""
-    print('Generating app "{}" in project "{}"'.format(
-        fixture_data['config']['app_name'],
-        fixture_data['config']['project_root']))
+    print('Generating app "{}" in project "{}"'.format(app, project))
     skaffold.generate_all()
 
 
@@ -97,7 +104,9 @@ try:
                 if json_config['config']['project_root']:
                     from_scratch_django(json_config, launch=can_launch)
                 else:
-                    new_app_django(json_config)
+                    app = json_config['config']['app_name']
+                    project = json_config['config']['project_root']
+                    new_app_django(json_config, app, project)
     else:
         print('`{}` is not a valid .json file'.format(sys.argv[2]))
 except IndexError:

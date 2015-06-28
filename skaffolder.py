@@ -1,9 +1,11 @@
+from jinja2 import Environment, PackageLoader
 import os
 import inflection
 
 
-class Skaffolder:
-    """
+class SkaffolderIO:
+    """Mixin class for dealing with raw IO aspects of scaffolding.
+
     = route (urls)
         view model
         view collection
@@ -44,10 +46,113 @@ class Skaffolder:
                 navigation
     """
 
+    def _setup_paths(self):
+        """Normalizes paths and allows for the use of
+        ~ in the self.absolute_path configuration."""
+        self.abspath = self.config['absolute_path']
+        self.project_name = self.config['project_root']
+        self.app_name = self.config['app_name']
+
+        # Setup ~/ if user added to their config.
+        if self.abspath.startswith('~'):
+            self.abspath = '{}{}'.format(
+                os.path.expanduser('~'), self.abspath[1:])
+
+        # Fix slashes in config, if necessary.
+        self.project_root = '{}{}'.format(
+            self.abspath, self._path_piece(self.project_name))
+
+        self.app_root = '{}{}'.format(
+            self.project_root,
+            self._path_piece(self.app_name))
+
     def save(self, rendered, filename, subdirectory=''):
-        with open('{}/{}{}'.format(
-                self.app_root, subdirectory, filename), 'w') as newfile:
+        path = '{}{}{}'.format(self.app_root, subdirectory, filename)
+        with open(path, 'w') as newfile:
             newfile.write(rendered + '\n')
+
+    def make_app_dirs(self):
+        """Creates all necessary directories for a fairly standard
+        app structure, and injects the appropriate paths into self.templates
+        Returns:
+            None
+        """
+        self.templates['root'] = '{}'.format(self.app_root + '/templates')
+        self.templates['layouts'] = '{}/layouts'.format(self.templates['root'])
+        self.templates['pages'] = '{}/pages'.format(self.templates['root'])
+        self.templates['partials'] = '{}/partials'.format(
+            self.templates['root'])
+
+        # Template root must exist before subdirs.
+        os.mkdir(self.templates['root'])
+        os.mkdir(self.templates['layouts'])
+        os.mkdir(self.templates['pages'])
+        os.mkdir(self.templates['partials'])
+
+        # Make other partials folders
+        os.mkdir(self.templates['partials'] + '/forms')
+        os.mkdir(self.templates['partials'] + '/models')
+
+        # Make static asset folders.
+        static = self.app_root + '/static/'
+        static_image = self.app_root + '/static/images/'
+        static_css = self.app_root + '/static/css/'
+        static_js = self.app_root + '/static/js/'
+
+        os.mkdir(static)
+        os.mkdir(static_image)
+        os.mkdir(static_css)
+        os.mkdir(static_js)
+
+        os.mkdir(static_css + 'vendor')
+        os.mkdir(static_css + 'app')
+        os.mkdir(static_js + 'vendor')
+        os.mkdir(static_js + 'app')
+
+
+class Skaffolder(object, SkaffolderIO):
+
+    def __init__(self, fixtures):
+        # Must set custom strings, since we want to keep some of the
+        # jinja/django style syntax intact in some outputs (e.g. templates)
+        self.env = Environment(
+            loader=PackageLoader(self.skeleton_root, ''),
+            trim_blocks=True,
+            lstrip_blocks=True,
+            block_start_string='{%%',
+            block_end_string='%%}',
+            variable_start_string='{{{',
+            variable_end_string='}}}',)
+        # Add custom filters to Jinja's context
+        self.env.filters['pluralize'] = self.get_plural_inflection
+        self.env.filters['singularize'] = self.get_singular_inflection
+        self.env.filters['is_list'] = self.is_list
+        self.data = []
+        self.fixtures = fixtures
+        self.config = self.fixtures['config']
+        self.bootstrap = self.config['bootstrap']
+        self.templates = {
+            'root': '',
+            'layouts': '',
+            'partials': '',
+            'pages': '',
+        }
+        self.models = self.fixtures['models']
+        # Setup all required paths.
+        self._setup_paths()
+
+    def _path_piece(self, piece):
+        """Always use `path/` style for directory pieces.
+        Args:
+            piece: the string, representing a directory piece,
+                or multple directories; e.g. p1 = `path/to/place/`,
+                p2 = 'subdir/path/', ...
+        """
+        if piece.startswith('/'):
+            piece = piece[1:]
+        if not piece.endswith('/'):
+            piece = piece + '/'
+        return piece
 
     def is_list(self, item):
         return isinstance(item, list)
@@ -88,44 +193,3 @@ class Skaffolder:
         elif type(prop) == str or type(prop) == unicode:
             return 'fuzzy.FuzzyText(length=10)'
         return prop
-
-    def make_app_dirs(self):
-        """Creates all necessary directories for a fairly standard
-        app structure, and injects the appropriate paths into self.templates
-        Returns:
-            None
-        """
-
-        # Root must exist first.
-        os.mkdir(self.app_root)
-        self.templates['root'] = '{}'.format(self.app_root + '/templates')
-        self.templates['layouts'] = '{}/layouts'.format(self.templates['root'])
-        self.templates['pages'] = '{}/pages'.format(self.templates['root'])
-        self.templates['partials'] = '{}/partials'.format(
-            self.templates['root'])
-
-        # Template root must exist before subdirs.
-        os.mkdir(self.templates['root'])
-        os.mkdir(self.templates['layouts'])
-        os.mkdir(self.templates['pages'])
-        os.mkdir(self.templates['partials'])
-
-        # Make other partials folders
-        os.mkdir(self.templates['partials'] + '/forms')
-        os.mkdir(self.templates['partials'] + '/models')
-
-        # Make static asset folders.
-        static = self.app_root + '/static/'
-        static_image = self.app_root + '/static/images/'
-        static_css = self.app_root + '/static/css/'
-        static_js = self.app_root + '/static/js/'
-
-        os.mkdir(static)
-        os.mkdir(static_image)
-        os.mkdir(static_css)
-        os.mkdir(static_js)
-
-        os.mkdir(static_css + 'vendor')
-        os.mkdir(static_css + 'app')
-        os.mkdir(static_js + 'vendor')
-        os.mkdir(static_js + 'app')
