@@ -4,7 +4,8 @@
         "project_root": "",
         "app_name": "",
         "use_admin": true,
-        "upload_dir": "media/",
+        "media_url": "media/",
+        "upload_dir": "uploads/",
         "export": true,
         "export_options": ["xml", "json", "yaml"],
         "bootstrap": {

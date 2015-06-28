@@ -58,6 +58,21 @@ class DjangoSkaffolder(Skaffolder):
             app_name=self.app_name,
             all_models=self.models)
 
+    def generate_settings(self):
+        """Render extra settings, on top of django-generated ones.
+        When the django project is created,
+        these will be injected after the last line."""
+        apps = (
+            '{project}.{app}'.format(
+                project=self.project_name, app=self.app_name),
+            'bootstrap3',
+        )
+        return self.generate_thing(
+            'extra_settings.py',
+            apps=apps,
+            upload_dir=self.config['upload_dir'],
+            media_url=self.config['media_url'])
+
     def generate_model_forms(self):
         return self.generate_thing('forms.py', all_models=self.models)
 
@@ -139,6 +154,7 @@ class DjangoSkaffolder(Skaffolder):
             ['forms.py', self.generate_model_forms],
             ['model_factories.py', self.generate_model_factories],
             ['tests.py', self.generate_tests],
+            ['extra_settings.py', self.generate_settings]
         ]
         for item in to_generate:
             filename, output = item
