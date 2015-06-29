@@ -11,7 +11,9 @@ class DjangoSkaffolder(Skaffolder):
         super(DjangoSkaffolder, self).__init__(fixtures)
         # Customer django settings
         self.use_admin = self.config['use_admin']
+        self.static_root = self.config['static_root']
         self.upload_dir = self.config['upload_dir']
+        self.media_root = self.config['media_root']
         self.env.filters['model_field'] = self.get_model_field_type
         self.env.filters['factory_field'] = self.get_modelfactory_field_type
 
@@ -70,8 +72,9 @@ class DjangoSkaffolder(Skaffolder):
         return self.generate_thing(
             'extra_settings.py',
             apps=apps,
-            upload_dir=self.config['upload_dir'],
-            media_url=self.config['media_url'])
+            static_root=self.static_root,
+            app_name=self.app_name,
+            media_root=self.media_root)
 
     def generate_model_forms(self):
         return self.generate_thing('forms.py', all_models=self.models)

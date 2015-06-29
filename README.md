@@ -60,8 +60,9 @@ TBD
 
 **See example.json for details and best examples.**
 
-* `upload_dir`: the path *beyond what is already defined in the settings file*. Must end in trailing slash. (Django)
-* `media_url`: the subdirectory for media. (Django)
+* `upload_dir`: the main directory/path to use when storing uploads in model forms. This is always a sub-directory of `static_root` (Django)
+* `static_root`: the path for all static assets (Django)
+* `media_url`: the subdirectory for media, used in collectstatic. (Django)
 * `absolute_path`: The absolute path to save all files and folders. Supports `~` to indicate the home directory.
 * `project_root`: the name of your primary application parent project
 * `app_name`: the name of your individual application
@@ -69,6 +70,11 @@ TBD
 * `export`: (bool) - enable/disable exporting of models from view (Django)
 * `export_options`: (list) - Acceptable serialized export options. Options are *xml*, *json*, and *yaml*.
 * `staticpages_in_nav`: (bool) - whether or not to render the staticpage links in the primary navigation
+
+#### A note on uploads and static media (django)
+Uploads are always stored by django in the `MEDIA_ROOT` directory, which is under `STATIC_ROOT`, and then stored wherever specified in the `upload_to` kwarg in your model form. To use this path easily, simply add:
+
+`{% static 'media' %}/{{ model.filename_property }}` in your template.
 
 ### Model Config
 
