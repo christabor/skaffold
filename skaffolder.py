@@ -2,6 +2,8 @@ from jinja2 import Environment, PackageLoader
 import os
 import inflection
 
+__author__ = """Chris Tabor (dxdstudio@gmail.com)"""
+
 
 class SkaffolderIO:
     """Mixin class for dealing with raw IO aspects of scaffolding.

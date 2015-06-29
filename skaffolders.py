@@ -1,6 +1,8 @@
 import os
 from skaffolder import Skaffolder
 
+__author__ = """Chris Tabor (dxdstudio@gmail.com)"""
+
 
 class DjangoSkaffolder(Skaffolder):
 
@@ -139,7 +141,8 @@ class DjangoSkaffolder(Skaffolder):
         self.save(
             self.generate_thing(
                 'generate_fixtures.py',
-                all_models=self.models, project=self.app_name,
+                all_models=self.models,
+                project=self.project_name,
                 app_name=self.app_name),
             'generate_fixtures.py', subdirectory='management/commands/')
 

@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from {{{ project_root }}}.{{{ app_name }}} import model_factories
+from {{{ project }}}.{{{ app_name }}} import model_factories
 
 MAX_RECORDS = 10
 
