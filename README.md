@@ -30,7 +30,7 @@ Skaffold is simple and opinionated. It provides very vanilla layout options, so 
 
 ## Using the command line interface (recommended)
 
-A script to load your example.json file and configuration is provided by cli.py. To use, just run `python cli.py --json **yourfile.json**`
+A script to load your json file and configuration is provided by cli.py. To use, just run `python cli.py --json **yourfile.json**`
 
 See the cli for more details. All options provided by cli arguments:
 
@@ -59,7 +59,7 @@ TBD
 
 ## JSON Config options:
 
-**See example.json for details and best examples.**
+**See defaults.json and example.json for details and best examples.**
 
 * `upload_dir`: the main directory/path to use when storing uploads in model forms. This is always a sub-directory of `static_root` (Django)
 * `static_root`: the path for all static assets (Django)
