@@ -103,14 +103,16 @@ Types are inferred by default, but a few must be specified. To avoid making conf
     - `default_btn_size`: (string) - the default button size for all plainly rendered buttons in the template. See [bootstrap buttons](http://getbootstrap.com/css/#buttons-sizes) for more details.
 
 ### Staticpages:
-* `title`: filenam`: a key/value list of static pages, with k = title, v = filename
-* `static_pages_filetype`: the filetype to use for static pages (e.g html, hbs, templ, etc...)
+* `title: filename`: a key/value list of static pages, where key = title, value = filename
+* `static_pages_filetype`: the filetype to use for static pages (e.g html, hbs, templ, etc...). Do *not* add a dot.
 
 ### Models:
 * `modelname, {key: val, key: val}` (map) - a model name, with child key/value pairs for each model property and value.
 
 ### TODO:
 * More support beyond django (Flask, etc...)
+* Better abstraction
+* More robust plug-in support/api (to prevent losing focus, and overloading the project).
 
 ### Support / donations
 ![Donation badge](https://img.shields.io/gratipay/christabor.svg)
