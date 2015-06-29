@@ -51,8 +51,9 @@ def {{{ model_name|lower }}}(request):
     context = {
         'form_mode': 'add',
         'current_page': '{{{ model_name|lower }}}',
-        'display_type': '{{{ _model_config['display_as'] }}}',
-        'display_type_classes': '{{{ _model_config['classes']|join(' ') }}}',
+        'display_type': request.GET['display'] if 'display' in request.GET else '{{{ _model_config['display_as'] }}}',
+        'display_type_classes': ' '.join(
+            request.GET['classes'].split(',')) if 'classes' in request.GET else '{{{ _model_config['classes']|join(' ') }}}',
         'display_type_data_attrs': ' '.join(map(lambda attr: 'data-{}'.format(attr), {{{ dattrs }}})),
         'model_name': '{{{ model_name }}}',
         'model_name_nice': '{{{ model_name|pluralize }}}',
@@ -92,10 +93,6 @@ def {{{ model_name|lower }}}_add(request, pk):
             form.save()
             messages.add_message(
                 request, messages.SUCCESS, 'Successfully added new {{{ model_name }}}')
-    else:
-        return HttpResponseRedirect('/')
-    messages.add_message(
-        request, messages.SUCCESS, 'Successfully added new {{{ model_name }}}')
     return HttpResponseRedirect('/')
 
 

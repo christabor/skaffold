@@ -8,11 +8,12 @@ By using the wonderful [Jinja2 templating engine](https://github.com/mitsuhiko/j
 
 * Model factories via [Factory Boy](https://github.com/rbarrois/factory_boy)
 * Test definitions with standard CRUD testing and input testing.
-* Models, Views Controllers and Routers
+* Models, Views Controllers and Routers (urls, in django)
 * Templating:
     * Any arbitrary static page
     * Form partials for CRUD operations
-    * Model and Collection views
+    * Model and Collection views for groups of models or model details
+    * Multiple display types in collection views (e.g. table, list, etc...)
 * (Django) custom commands for fixture generation `python manage.py generate_fixtures`
 * Typical app structure:
     * CSS, JS and image folder, with app/vendor subfolders.

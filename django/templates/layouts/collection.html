@@ -4,7 +4,16 @@
 
 {% block content %}
 <div class="col-md-12">
-    <h1>All {{ model_name_nice }}</h1>
+    <h1 class="clearfix">
+        All {{ model_name_nice }}
+        <small class="pull-right">Display as:
+            <span class="btn-group">
+                <a href="?display=table" class="btn btn-info btn-sm">Table</a>
+                <a href="?display=list" class="btn btn-info btn-sm">List</a>
+                <a href="?display=panel" class="btn btn-info btn-sm">Panel</a>
+            </span>
+        </small>
+    </h1>
     {% with "{{{ app_name }}}.views."|add:model_name|lower|add:"_detail" as view_url %}
     {% with "{{{ app_name }}}.views."|add:model_name|lower|add:"_delete" as delete_url %}
 

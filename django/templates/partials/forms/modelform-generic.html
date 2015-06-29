@@ -3,13 +3,7 @@
 <form action="." method="POST" role="form" class="clearfix form" enctype="multipart/form-data">
     {% csrf_token %}
     <legend><strong>{{ form_mode|capfirst }}</strong> {{ model_name|lower }}</legend>
-    {% if form.error %}
-    {% for error in form.error %}
-    <span class="bg-danger">
-        {{ error }}
-    </span>
-    {% endfor %}
-    {% endif %}
+    {% bootstrap_form_errors form layout='{{{ bootstrap_config['form_display'] }}}' %}
     {% bootstrap_form form layout='{{{ bootstrap_config['form_display'] }}}' %}
     {% buttons %}
     <button type="submit" class="btn btn-primary {{{ bootstrap_config['default_btn_size'] }}}">
