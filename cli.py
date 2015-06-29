@@ -4,19 +4,22 @@ import json
 import collections
 from skaffolders import DjangoSkaffolder
 
+__author__ = """Chris Tabor (dxdstudio@gmail.com)"""
+
 
 def _clean(root_dir):
-    print('Deleting existing project (if applicable) located at {}'.format(
-        root_dir))
     os.system('rm -r ' + root_dir)
 
 
-def from_scratch_django(fixture_data, launch=True):
+def from_scratch_django(fixture_data, launch=True, verbose=False):
     """Does all work required to setup a completely new application."""
     django = DjangoSkaffolder(fixture_data)
     project_name = django.project_name
     app_name = django.app_name
 
+    if verbose:
+        print('Deleting existing project '
+              '(if applicable) located at {}'.format(django.project_root))
     _clean(django.project_root)
     # Move into the newly created directory.
     os.chdir(django.abspath)
@@ -37,7 +40,8 @@ def from_scratch_django(fixture_data, launch=True):
     root_urlconf = django.project_root + 'urls.py'
     settings_file = django.project_root + 'settings.py'
 
-    print('Updating settings and urlconf files...')
+    if verbose:
+        print('Updating settings and urlconf files...')
     # Move extra settings up.
     os.rename(
         django.app_root + 'extra_settings.py',
@@ -54,12 +58,14 @@ def from_scratch_django(fixture_data, launch=True):
         urlconf.close()
 
     os.chdir('../')
-    print('Creating database tables and fixture data...')
+    if verbose:
+        print('Creating database tables and fixture data...')
     os.system('python manage.py syncdb --noinput && '
               'python manage.py generate_fixtures')
 
     if launch:
-        print('Running server!')
+        if verbose:
+            print('Running server!')
         os.system('python manage.py runserver')
 
     print("""
@@ -70,9 +76,10 @@ def from_scratch_django(fixture_data, launch=True):
     """.format(project_name, app_name, settings=settings_file))
 
 
-def new_app_django(skaffold, app, project):
+def new_app_django(skaffold, app, project, verbose=False):
     """A quick util to access the generator from command line"""
-    print('Generating app "{}" in project "{}"'.format(app, project))
+    if verbose:
+        print('Generating app "{}" in project "{}"'.format(app, project))
     skaffold.generate_all()
 
 
@@ -94,6 +101,7 @@ try:
         print('No JSON arguments supplied.')
     if sys.argv[1] == '--json' and sys.argv[2].endswith('json'):
         can_launch = '--noserve' not in sys.argv
+        verbose = '--verbose' in sys.argv
         json_file = sys.argv[2]
         with open('defaults.json', 'r') as default_json_data:
             json_config = dict(json.loads(default_json_data.read()))
@@ -101,11 +109,13 @@ try:
                 extra_config = dict(json.loads(json_data.read()))
                 json_config = mergedicts(json_config, extra_config)
                 if json_config['config']['project_root']:
-                    from_scratch_django(json_config, launch=can_launch)
+                    from_scratch_django(
+                        json_config, launch=can_launch, verbose=verbose)
                 else:
                     app = json_config['config']['app_name']
                     project = json_config['config']['project_root']
-                    new_app_django(json_config, app, project)
+                    new_app_django(
+                        json_config, app, project, verbose=verbose)
     else:
         print('`{}` is not a valid .json file'.format(sys.argv[2]))
 except IndexError:
