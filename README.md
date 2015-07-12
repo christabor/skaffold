@@ -114,5 +114,8 @@ Types are inferred by default, but a few must be specified. To avoid making conf
 * Better abstraction
 * More robust plug-in support/api (to prevent losing focus, and overloading the project).
 
+### More/Similar
+Not meeting your needs? Submit an issue, or consider looking at something like[CookieCutter](https://github.com/audreyr/cookiecutter), and/or [CookieCutter-Django](https://github.com/pydanny/cookiecutter-django).
+
 ### Support / donations
 ![Donation badge](https://img.shields.io/gratipay/christabor.svg)
