@@ -1,3 +1,6 @@
+[![MIT Badge](http://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/christabor/Skaffold/master/LICENSE)
+![Donation badge](https://img.shields.io/gratipay/christabor.svg)
+
 Skaffold
 ============================================================
 Providing auto-scaffolding for your web applications!
@@ -116,6 +119,3 @@ Types are inferred by default, but a few must be specified. To avoid making conf
 
 ### More/Similar
 Not meeting your needs? Submit an issue, or consider looking at something like [CookieCutter](https://github.com/audreyr/cookiecutter), and/or [CookieCutter-Django](https://github.com/pydanny/cookiecutter-django).
-
-### Support / donations
-![Donation badge](https://img.shields.io/gratipay/christabor.svg)
